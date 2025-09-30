@@ -1,5 +1,13 @@
+import { Outlet } from "react-router-dom";
+import Navbar from "./components/Navbar";
+
 const App = () => {
-  return <div>Landing Page</div>;
+  return (
+    <div className="w-full h-[100vh] relative sm:pl-[250px]">
+      <Outlet />
+      <Navbar />
+    </div>
+  );
 };
 
 export default App;
