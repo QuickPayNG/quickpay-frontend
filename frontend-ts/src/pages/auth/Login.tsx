@@ -1,5 +1,150 @@
+import { Button } from "@/components/ui/button";
+import { AuthContext } from "@/contexts/authContext/AuthContext";
+
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+
 const Login = () => {
-  return <div>Login Page</div>;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { login, isLoading } = useContext(AuthContext);
+
+  const handleLogin = async (e: any) => {
+    e.preventDefault();
+    if (!email || !password) {
+      toast.error("Fill in all details to continue");
+      return;
+    }
+    const isSuccessful: any = await login(email, password);
+    if (isSuccessful) {
+      console.log("login successfull");
+      navigate("/dashboard");
+    } else {
+      console.log("error signing in");
+    }
+  };
+  return (
+    <div className="bg-background-light dark:bg-background-dark font-display">
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-background-dark rounded-xl shadow-lg">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-black dark:text-white">
+              Welcome Back to QuickPay
+            </h1>
+          </div>
+          <form className="space-y-6">
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <div className="mt-1">
+                <input
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 border-gray-300 dark:border-white/20 rounded-lg text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  id="email"
+                  name="email"
+                  required
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <div className="mt-1">
+                <input
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 border-gray-300 dark:border-white/20 rounded-lg text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  id="password"
+                  name="password"
+                  required
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <a className="text-sm text-primary hover:underline" href="#">
+                Forgot Password?
+              </a>
+            </div>
+            <div>
+              <button
+                className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-black bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+                type="submit"
+                disabled={isLoading}
+                onClick={handleLogin}
+              >
+                {isLoading ? "Login in..." : "Login"}
+              </button>
+            </div>
+          </form>
+          <div className="relative">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-300 dark:border-white/20"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-2 bg-white dark:bg-background-dark text-gray-500 dark:text-gray-400">
+                Or continue with
+              </span>
+            </div>
+          </div>
+          <div>
+            <Button
+              className="w-full inline-flex justify-center py-3 px-4 border border-gray-300 dark:border-white/20 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-black/30"
+              type="button"
+            >
+              <svg
+                className="w-5 h-5 mr-2"
+                viewBox="0 0 48 48"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"
+                  fill="#FFC107"
+                ></path>
+                <path
+                  d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z"
+                  fill="#FF3D00"
+                ></path>
+                <path
+                  d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238C29.211 35.091 26.715 36 24 36c-5.222 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"
+                  fill="#4CAF50"
+                ></path>
+                <path
+                  d="M43.611 20.083H42V20H24v8h11.303c-.792 2.237-2.231 4.166-4.087 5.571l6.19 5.238C43.021 36.697 44 34.059 44 31.25c0-3.72-1.01-7.22-2.738-10.222l-.251-.445z"
+                  fill="#1976D2"
+                ></path>
+              </svg>
+              Continue with Google
+            </Button>
+          </div>
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+            <p>
+              Don't have an account?
+              <Link
+                className="font-medium text-primary hover:underline"
+                to={"/signup"}
+              >
+                Sign up here.
+              </Link>
+            </p>
+            <p className="mt-2">Secure login powered by Firebase Auth.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

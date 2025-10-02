@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+
 import App from "./App";
 import Dashboard from "./pages/dashboard/Dashboard";
 import LandingPage from "./pages/landing";
@@ -6,32 +7,76 @@ import SignUP from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import Profile from "./pages/dashboard/Profile";
 import Links from "./pages/dashboard/Links";
+import AuthRoute from "./components/AuthRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
+import RootLayout from "./RootLayout";
+import Rewards from "./pages/dashboard/Rewards";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
-    element: <LandingPage />,
-  },
-  {
-    path: "/signup",
-    element: <SignUP />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/",
-    element: <App />,
+    element: <RootLayout />,
     children: [
-      { path: "dashboard", element: <Dashboard /> },
       {
-        path: "links",
-        element: <Links />,
+        path: "/",
+        element: (
+          <AuthRoute>
+            <LandingPage />
+          </AuthRoute>
+        ),
       },
       {
-        path: "profile",
-        element: <Profile />,
+        path: "/signup",
+        element: (
+          <AuthRoute>
+            <SignUP />
+          </AuthRoute>
+        ),
+      },
+      {
+        path: "/login",
+        element: (
+          <AuthRoute>
+            <Login />
+          </AuthRoute>
+        ),
+      },
+      {
+        path: "/",
+        element: <App />,
+        children: [
+          {
+            path: "dashboard",
+            element: (
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "links",
+            element: (
+              <ProtectedRoute>
+                <Links />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "rewards",
+            element: (
+              <ProtectedRoute>
+                <Rewards />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "profile",
+            element: (
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            ),
+          },
+        ],
       },
     ],
   },
