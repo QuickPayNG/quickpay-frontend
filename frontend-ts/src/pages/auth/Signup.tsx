@@ -7,7 +7,7 @@ const SignUP = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const { isLoading, isSuccessful, signup } = useContext(AuthContext);
+  const { isLoading, signup } = useContext(AuthContext);
   // const navigate = useNavigate();
 
   const handleSignup = async (e: any) => {
@@ -22,9 +22,9 @@ const SignUP = () => {
       return;
     }
 
-    signup(fullname, email, password);
+    const isSuccess: any = signup(fullname, email, password);
 
-    if (isSuccessful) {
+    if (isSuccess) {
       console.log("signup successfull");
     } else {
       console.log("Registration not successful, try again");

@@ -1,51 +1,85 @@
 import { useState } from "react";
 import { AuthContext } from "./AuthContext";
-import { auth } from "../../lib/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from "../../lib/firebaseConfig";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 
 export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState<any>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccessful, setIsSuccessful] = useState(false);
 
-  const login = () => {
-    const name = "ade";
-    console.log("welcome", name);
+  const uploadUserDetails = async (userId: any, fullname: string) => {
+    try {
+      const docRef = await setDoc(doc(db, "users", userId), {
+        fullname: fullname,
+      });
+      console.log("docref", docRef);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const logout = () => {
-    setUser("");
-    setIsAuthenticated(false);
-  };
-
-  // const uploadUserDetails = (userId) => {
-  //   console.log(userId);
-  // };
 
   const signup = async (fullname: string, email: string, password: string) => {
     setIsLoading(true);
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setIsLoading(false);
-        setIsSuccessful(true);
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log({
-          errorCode: error.code,
-          message: error.message,
-        });
-        setIsLoading(false);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      await uploadUserDetails(user.uid, fullname);
+      setIsLoading(false);
+      return true;
+    } catch (error: any) {
+      console.log({
+        errorCode: error.code,
+        message: error.message,
       });
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const login = async (email: string, password: string) => {
+    setIsLoading(true);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      console.log(user);
+      setUser(user);
+      setIsAuthenticated(true);
+      return true;
+    } catch (error: any) {
+      console.log({
+        errorCode: error.code,
+        message: error.message,
+      });
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    setIsAuthenticated(false);
   };
 
   const value = {
     user,
     isAuthenticated,
     isLoading,
-    isSuccessful,
     login,
     signup,
     logout,
