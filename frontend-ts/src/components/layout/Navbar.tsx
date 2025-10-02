@@ -8,7 +8,9 @@ import {
   User,
 } from "lucide-react";
 import quickpayLogo from "../../assets/logo/quickpay.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/authContext/AuthContext";
 
 const desktopNavItems = [
   { to: "dashboard", label: "Home", icon: <HomeIcon size={20} /> },
@@ -51,11 +53,25 @@ const mobileNavItems = [
 ];
 
 const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    console.log("signing out");
+
+    const hasSignout: any = await logout();
+    if (hasSignout) {
+      console.log("signout successful");
+      navigate("/login");
+    } else {
+      console.log("an error occur");
+    }
+  };
   return (
     <>
       {/* deskotop */}
 
-      <div className="w-[250px] h-[100vh] bg-yellow-400 py-4 text-black fixed left-0 top-0 hidden sm:flex flex-col items-center border-r-1 border-black justify-between">
+      <div className="w-[250px] h-[100vh] bg-primary py-4 text-black fixed left-0 top-0 hidden sm:flex flex-col items-center border-r-1 border-black justify-between">
         {/* top */}
         <div className="w-full flex flex-col gap-3">
           {/* logo */}
@@ -65,12 +81,12 @@ const Navbar = () => {
           </div>
           {/* userinfo */}
           <div className="w-full flex flex-row gap-2 items-center border-y-1 border-black py-4 pl-3">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white text-3xl cursor-pointer">
+            <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white text-3xl cursor-pointer">
               <User size={16} />
             </div>
             <div className="flex flex-col">
-              <h1 className="text-md font-bold">John Doe</h1>
-              <p className="text-xs text-black">johndoe22@gmail.com</p>
+              <h1 className="text-md font-bold">{user?.fullname}</h1>
+              <p className="text-xs text-black">{user?.email}</p>
             </div>
           </div>
           {/* navigations */}
@@ -93,7 +109,10 @@ const Navbar = () => {
             <Sun size={20} />
             LightMode
           </div>
-          <div className="flex flex-row gap-4 items-center cursor-pointer text-sm text-red-800">
+          <div
+            onClick={handleLogout}
+            className="flex flex-row gap-4 items-center cursor-pointer text-sm text-red-800"
+          >
             <LogOut size={20} />
             Sign Out
           </div>

@@ -8,6 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+import toast from "react-hot-toast";
 
 export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>(null);
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }: any) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         const userData = await fetchUserDetails(currentUser.uid);
+
         setUser({
           uid: currentUser.uid,
           email: currentUser.email,
@@ -61,6 +63,7 @@ export const AuthProvider = ({ children }: any) => {
 
   const signup = async (fullname: string, email: string, password: string) => {
     setIsLoading(true);
+    const toastId = toast.loading("Getting you signed up...");
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -70,21 +73,25 @@ export const AuthProvider = ({ children }: any) => {
       const user = userCredential.user;
       console.log(user);
       await uploadUserDetails(user.uid, fullname);
+      toast.success("Account creation successfull, proceed to login");
 
       return true;
     } catch (error: any) {
+      toast.error(error.code);
       console.log({
         errorCode: error.code,
         message: error.message,
       });
       return false;
     } finally {
+      toast.dismiss(toastId);
       setIsLoading(false);
     }
   };
 
   const login = async (email: string, password: string) => {
     setIsLoading(true);
+    const toastId = toast.loading("Getting you signed in...");
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -95,23 +102,37 @@ export const AuthProvider = ({ children }: any) => {
       console.log("user", user);
       const userData = await fetchUserDetails(user.uid);
       setUser({ uid: user.uid, email: user.email, ...(userData || {}) });
+      toast.success("Logged In");
       setIsAuthenticated(true);
       return true;
     } catch (error: any) {
+      toast.error(error.code);
       console.log({
         errorCode: error.code,
         message: error.message,
       });
       return false;
     } finally {
+      toast.dismiss(toastId);
       setIsLoading(false);
     }
   };
 
   const logout = async () => {
-    await signOut(auth);
-    setUser(null);
-    setIsAuthenticated(false);
+    setIsLoading(true);
+    const toastId = toast.loading("Signing out...");
+    try {
+      await signOut(auth);
+      setUser(null);
+      setIsAuthenticated(false);
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
+    } finally {
+      setIsLoading(false);
+      toast.dismiss(toastId);
+    }
   };
 
   const value = {
