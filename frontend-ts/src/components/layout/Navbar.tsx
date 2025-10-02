@@ -7,7 +7,7 @@ import {
   Sun,
   User,
 } from "lucide-react";
-import quickpayLogo from "../assets/logo/quickpay.png";
+import quickpayLogo from "../../assets/logo/quickpay.png";
 import { NavLink } from "react-router-dom";
 
 const desktopNavItems = [

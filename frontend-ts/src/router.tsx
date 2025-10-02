@@ -6,32 +6,61 @@ import SignUP from "./pages/auth/Signup";
 import Login from "./pages/auth/Login";
 import Profile from "./pages/dashboard/Profile";
 import Links from "./pages/dashboard/Links";
+import AuthRoute from "./components/AuthRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <LandingPage />,
+    element: (
+      <AuthRoute>
+        <LandingPage />
+      </AuthRoute>
+    ),
   },
   {
     path: "/signup",
-    element: <SignUP />,
+    element: (
+      <AuthRoute>
+        <SignUP />
+      </AuthRoute>
+    ),
   },
   {
     path: "/login",
-    element: <Login />,
+    element: (
+      <AuthRoute>
+        <Login />
+      </AuthRoute>
+    ),
   },
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "dashboard", element: <Dashboard /> },
+      {
+        path: "dashboard",
+        element: (
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        ),
+      },
       {
         path: "links",
-        element: <Links />,
+        element: (
+          <ProtectedRoute>
+            <Links />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },
