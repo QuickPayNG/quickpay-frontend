@@ -13,10 +13,10 @@ import { useContext } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 
 const desktopNavItems = [
-  { to: "dashboard", label: "Home", icon: <HomeIcon size={20} /> },
+  { to: "dashboard", label: "Dashboard", icon: <HomeIcon size={20} /> },
   { to: "links", label: "Links", icon: <Link size={20} /> },
   { to: "#", label: "Create Link", icon: <PlusIcon size={20} /> },
-  { to: "#", label: "Rewards", icon: <Gift size={20} /> },
+  { to: "rewards", label: "Rewards", icon: <Gift size={20} /> },
   { to: "profile", label: "Profile", icon: <User size={20} /> },
 ];
 const mobileNavItems = [
@@ -39,7 +39,7 @@ const mobileNavItems = [
     isButton: true,
   },
   {
-    to: "#",
+    to: "rewards",
     label: "Rewards",
     icon: <Gift size={30} />,
     isButton: false,

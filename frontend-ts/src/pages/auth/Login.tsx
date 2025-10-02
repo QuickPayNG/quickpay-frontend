@@ -20,7 +20,7 @@ const Login = () => {
     const isSuccessful: any = await login(email, password);
     if (isSuccessful) {
       console.log("login successfull");
-      navigate("/app/dashboard");
+      navigate("/dashboard");
     } else {
       console.log("error signing in");
     }

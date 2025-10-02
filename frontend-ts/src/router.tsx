@@ -10,6 +10,7 @@ import Links from "./pages/dashboard/Links";
 import AuthRoute from "./components/AuthRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RootLayout from "./RootLayout";
+import Rewards from "./pages/dashboard/Rewards";
 
 export const router = createBrowserRouter([
   {
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/app",
+        path: "/",
         element: <App />,
         children: [
           {
@@ -56,6 +57,14 @@ export const router = createBrowserRouter([
             element: (
               <ProtectedRoute>
                 <Links />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "rewards",
+            element: (
+              <ProtectedRoute>
+                <Rewards />
               </ProtectedRoute>
             ),
           },
