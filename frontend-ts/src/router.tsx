@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/",
+        path: "/app",
         element: <App />,
         children: [
           {

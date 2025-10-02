@@ -28,7 +28,7 @@ const SignUP = () => {
     const isSuccess: any = await signup(fullname, email, password);
 
     if (isSuccess) {
-      navigate("/login");
+      navigate("/app/dashboard");
       console.log("signup successfull");
     } else {
       console.log("Registration not successful, try again");

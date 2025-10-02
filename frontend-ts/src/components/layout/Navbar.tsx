@@ -71,7 +71,7 @@ const Navbar = () => {
     <>
       {/* deskotop */}
 
-      <div className="w-[250px] h-[100vh] bg-primary py-4 text-black fixed left-0 top-0 hidden sm:flex flex-col items-center border-r-1 border-black justify-between">
+      <div className="w-[250px] h-[100vh] bg-background py-4 text-black fixed left-0 top-0 hidden sm:flex flex-col items-center border-r-1 border-gray-200 justify-between">
         {/* top */}
         <div className="w-full flex flex-col gap-3">
           {/* logo */}
@@ -80,7 +80,7 @@ const Navbar = () => {
             <h1 className="text-2xl font-bold">QuickPay</h1>
           </div>
           {/* userinfo */}
-          <div className="w-full flex flex-row gap-2 items-center border-y-1 border-black py-4 pl-3">
+          <div className="w-full flex flex-row gap-2 items-center border-y-1 border-gray-200 py-4 pl-3">
             <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white text-3xl cursor-pointer">
               <User size={16} />
             </div>
@@ -95,7 +95,7 @@ const Navbar = () => {
               <NavLink
                 key={index}
                 to={item.to}
-                className="flex flex-row gap-4 items-center px-2 py-1 cursor-pointer hover:bg-yellow-300  hover:rounded-2xl"
+                className="flex flex-row gap-4 items-center px-2 py-1 cursor-pointer hover:bg-primary  hover:rounded-2xl"
               >
                 {item.icon}
                 {item.label}
@@ -104,7 +104,7 @@ const Navbar = () => {
           </div>
         </div>
         {/* down */}
-        <div className="w-full flex flex-col gap-4 text-lg font-semibold border-t-1 border-black pt-4 pl-3">
+        <div className="w-full flex flex-col gap-4 text-lg font-semibold border-t-1 border-gray-200 pt-4 pl-3">
           <div className="flex flex-row gap-4 items-center cursor-pointer text-sm">
             <Sun size={20} />
             LightMode
@@ -121,13 +121,13 @@ const Navbar = () => {
 
       {/* mobile */}
 
-      <div className="sm:hidden flex w-full h-[70px] bg-yellow-400 py-10 text-black fixed bottom-0  items-center justify-evenly">
+      <div className="sm:hidden flex w-full h-[70px] bg-background py-10 text-black fixed bottom-0  items-center border-t-1 border-gray-200 justify-evenly">
         {mobileNavItems.map((item, index) =>
           item.isButton ? (
             <NavLink
               key={index}
               to={item.to}
-              className="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-white text-3xl cursor-pointer hover:scale-105 transition-transform"
+              className="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-black text-3xl cursor-pointer hover:scale-105 transition-transform"
             >
               {item.icon}
             </NavLink>
