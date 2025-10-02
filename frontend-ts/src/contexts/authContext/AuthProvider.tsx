@@ -5,7 +5,7 @@ export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(true);
 
-  const login = () => {
+  const login = (email, password) => {
     const name = "ade";
     setUser(name);
     setIsAuthenticated(true);
@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: any) => {
     console.log("good bye Ade");
   };
 
-  const signup = () => {
+  const signup = (email, password, fullname) => {
     console.log("good bye Ade");
   };
 
