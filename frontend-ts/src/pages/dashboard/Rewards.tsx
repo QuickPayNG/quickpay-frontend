@@ -1,5 +1,13 @@
 const Rewards = () => {
-  return <div>Rewards</div>;
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center">
+      <h1 className="text-2xl font-bold text-black">Rewards</h1>
+      <p className="mt-4 text-lg text-gray-600">
+        This feature is{" "}
+        <span className="text-primary font-semibold">Coming Soon</span>
+      </p>
+    </div>
+  );
 };
 
 export default Rewards;
