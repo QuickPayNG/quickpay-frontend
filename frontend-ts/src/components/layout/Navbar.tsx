@@ -14,7 +14,7 @@ import { AuthContext } from "@/contexts/authContext/AuthContext";
 
 const desktopNavItems = [
   { to: "dashboard", label: "Dashboard", icon: <HomeIcon size={20} /> },
-  { to: "links", label: "Links", icon: <Link size={20} /> },
+  { to: "links", label: "My Links", icon: <Link size={20} /> },
   { to: "#", label: "Create Link", icon: <PlusIcon size={20} /> },
   { to: "rewards", label: "Rewards", icon: <Gift size={20} /> },
   { to: "profile", label: "Profile", icon: <User size={20} /> },
@@ -69,15 +69,15 @@ const Navbar = () => {
     <>
       {/* deskotop */}
 
-      <div className="w-[250px] h-[100vh] bg-background py-4 text-black fixed left-0 top-0 hidden sm:flex flex-col items-center border-r-1 border-gray-200 justify-between">
+      <div className="w-[250px] h-[100vh] bg-black py-4 text-white fixed left-0 top-0 hidden sm:flex flex-col items-center justify-between">
         {/* top */}
         <div className="w-full flex flex-col gap-3">
           {/* logo */}
           <div className="flex flex-row gap-2 items-center pl-2">
             <img src={quickpayLogo} alt="logo" className="w-15 h-15" />
-            <h1 className="text-2xl font-bold">QuickPay</h1>
+            <h1 className="text-xl font-bold">QuickPay</h1>
           </div>
-          {/* userinfo */}
+          {/* userinfo
           <div className="w-full flex flex-row gap-2 items-center border-y-1 border-gray-200 py-4 pl-3">
             <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white text-3xl cursor-pointer">
               <User size={16} />
@@ -86,14 +86,14 @@ const Navbar = () => {
               <h1 className="text-md font-bold">{user?.fullname}</h1>
               <p className="text-xs text-black">{user?.email}</p>
             </div>
-          </div>
+          </div> */}
           {/* navigations */}
-          <div className="flex flex-col gap-4 mt-4 text-lg font-semibold pl-3 pr-2">
+          <div className="flex flex-col gap-2 mt-2 text-sm  pl-4 pr-2">
             {desktopNavItems.map((item, index) => (
               <NavLink
                 key={index}
                 to={item.to}
-                className="flex flex-row gap-4 items-center px-2 py-1 cursor-pointer hover:bg-primary  hover:rounded-2xl"
+                className="flex flex-row text-[#adaaaa] gap-4 items-center px-2 py-1.25 cursor-pointer hover:bg-[#473c0a] hover:text-white rounded-md"
               >
                 {item.icon}
                 {item.label}
@@ -102,7 +102,7 @@ const Navbar = () => {
           </div>
         </div>
         {/* down */}
-        <div className="w-full flex flex-col gap-4 text-lg font-semibold border-t-1 border-gray-200 pt-4 pl-3">
+        <div className="w-full flex flex-col gap-4 text-lg font-semibold pt-4 pl-3">
           <div className="flex flex-row gap-4 items-center cursor-pointer text-sm">
             <Sun size={20} />
             LightMode
