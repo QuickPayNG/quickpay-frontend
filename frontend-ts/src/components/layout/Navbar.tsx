@@ -53,7 +53,7 @@ const mobileNavItems = [
 ];
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
 
   const handleLogout = async () => {
     console.log("signing out");

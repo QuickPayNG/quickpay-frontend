@@ -28,7 +28,7 @@ const SignUP = () => {
     const isSuccess: any = await signup(fullname, email, password);
 
     if (isSuccess) {
-      navigate("/login");
+      navigate(`/waitlist/${fullname}`);
       console.log("signup successfull");
     } else {
       console.log("Registration not successful, try again");
@@ -44,38 +44,79 @@ const SignUP = () => {
             </h1>
           </div>
           <form className="space-y-4" onSubmit={handleSignup}>
-            <input
-              className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-              placeholder="Full Name"
-              type="text"
-              value={fullname}
-              required
-              onChange={(e) => setFullName(e.target.value)}
-            />
-            <input
-              className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-              placeholder="Email"
-              type="email"
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-              placeholder="Password"
-              type="password"
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <input
-              className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-              placeholder="Confirm Password"
-              type="password"
-              value={confirmPassword}
-              required
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                htmlFor="email"
+              >
+                Full Name *
+              </label>
+              <div className="mt-1">
+                <input
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Full Name"
+                  type="text"
+                  value={fullname}
+                  required
+                  onChange={(e) => setFullName(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                htmlFor="email"
+              >
+                Email *
+              </label>
+              <div className="mt-1">
+                <input
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Email"
+                  type="email"
+                  value={email}
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                htmlFor="email"
+              >
+                Password *
+              </label>
+              <div className="mt-1">
+                <input
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Password"
+                  type="password"
+                  value={password}
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                htmlFor="email"
+              >
+                Confirm Password *
+              </label>
+              <div className="mt-1">
+                <input
+                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Confirm Password"
+                  type="password"
+                  value={confirmPassword}
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
             <Button
               className="w-full py-3 bg-primary text-background-dark font-bold rounded-lg hover:bg-primary/90 transition-colors cursor-pointer"
               type="submit"

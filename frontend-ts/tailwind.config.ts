@@ -5,6 +5,7 @@ export default {
       colors: {
         primary: "var(--primary)",
         background: "var(--background)",
+        text: "var(--text)",
       },
       borderRadius: {
         DEFAULT: "var(--radius)",
