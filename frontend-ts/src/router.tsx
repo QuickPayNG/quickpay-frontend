@@ -11,6 +11,7 @@ import AuthRoute from "./components/AuthRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
 import RootLayout from "./RootLayout";
 import Rewards from "./pages/dashboard/Rewards";
+import Waitlist from "./pages/waitlist/Waitlist";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ export const router = createBrowserRouter([
             <SignUP />
           </AuthRoute>
         ),
+      },
+      {
+        path: "/waitlist/:name",
+        element: <Waitlist />,
       },
       {
         path: "/login",

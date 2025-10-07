@@ -8,7 +8,7 @@ import {
   User,
 } from "lucide-react";
 import quickpayLogo from "../../assets/logo/quickpay.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 
@@ -53,8 +53,7 @@ const mobileNavItems = [
 ];
 
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const { logout } = useContext(AuthContext);
 
   const handleLogout = async () => {
     console.log("signing out");
@@ -62,7 +61,6 @@ const Navbar = () => {
     const hasSignout: any = await logout();
     if (hasSignout) {
       console.log("signout successful");
-      navigate("/login");
     } else {
       console.log("an error occur");
     }
