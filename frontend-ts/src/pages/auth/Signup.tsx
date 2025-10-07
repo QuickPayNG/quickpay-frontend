@@ -37,24 +37,25 @@ const SignUP = () => {
   return (
     <div className="bg-background dark:bg-background-dark font-display">
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="w-full max-w-md bg-white dark:bg-[#1C190D] shadow-xl rounded-xl p-8 space-y-6">
+        <div className="w-full max-w-md dark:bg-white bg-[#1C190D] shadow-xl rounded-xl p-8 space-y-6">
           <div className="flex flex-col items-center space-y-4">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white text-center">
+            <h1 className="text-3xl font-bold dark:text-gray-900 text-white text-center">
               Create Your QuickPay Account
             </h1>
           </div>
           <form className="space-y-4" onSubmit={handleSignup}>
             <div>
               <label
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                htmlFor="email"
+                className="block text-sm font-medium dark:text-gray-700 text-gray-300"
+                htmlFor="fullname"
               >
                 Full Name *
               </label>
               <div className="mt-1">
                 <input
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   placeholder="Full Name"
+                  id="fullname"
                   type="text"
                   value={fullname}
                   required
@@ -64,34 +65,37 @@ const SignUP = () => {
             </div>
             <div>
               <label
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium dark:text-gray-700 text-gray-300"
                 htmlFor="email"
               >
                 Email *
               </label>
               <div className="mt-1">
                 <input
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  placeholder="Email"
-                  type="email"
+                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Full Name"
+                  id="email"
+                  type="text"
                   value={email}
                   required
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
+
             <div>
               <label
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                htmlFor="email"
+                className="block text-sm font-medium dark:text-gray-700 text-gray-300"
+                htmlFor="Password"
               >
                 Password *
               </label>
               <div className="mt-1">
                 <input
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  placeholder="Password"
+                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Confirm Password"
                   type="password"
+                  id="password"
                   value={password}
                   required
                   onChange={(e) => setPassword(e.target.value)}
@@ -100,16 +104,17 @@ const SignUP = () => {
             </div>
             <div>
               <label
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                htmlFor="email"
+                className="block text-sm font-medium dark:text-gray-700 text-gray-300"
+                htmlFor="confirmPassword"
               >
                 Confirm Password *
               </label>
               <div className="mt-1">
                 <input
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 text-gray-800 dark:text-gray-200 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   placeholder="Confirm Password"
                   type="password"
+                  id="confirmPassword"
                   value={confirmPassword}
                   required
                   onChange={(e) => setConfirmPassword(e.target.value)}
@@ -124,7 +129,7 @@ const SignUP = () => {
               {isLoading ? "Signing up.." : "Sign up for free"}
             </Button>
             <Button
-              className="w-full inline-flex justify-center py-3 px-4 border border-gray-300 dark:border-white/20 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-black/30"
+              className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30"
               type="button"
             >
               <svg
