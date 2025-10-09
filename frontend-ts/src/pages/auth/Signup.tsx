@@ -129,7 +129,7 @@ const SignUP = () => {
               {isLoading ? "Signing up.." : "Sign up for free"}
             </Button>
             <Button
-              className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30"
+              className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30 cursor-pointer"
               type="button"
             >
               <svg
@@ -163,6 +163,7 @@ const SignUP = () => {
               <Link
                 className="font-medium text-primary hover:underline"
                 to={"/login"}
+                onClick={(e) => e.preventDefault()}
               >
                 Login here.
               </Link>
