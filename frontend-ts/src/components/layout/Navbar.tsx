@@ -8,7 +8,7 @@ import {
   User,
 } from "lucide-react";
 import quickpayLogo from "../../assets/logo/quickpay.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 
@@ -54,12 +54,14 @@ const mobileNavItems = [
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     console.log("signing out");
 
     const hasSignout: any = await logout();
     if (hasSignout) {
+      navigate("login");
       console.log("signout successful");
     } else {
       console.log("an error occur");
@@ -77,16 +79,7 @@ const Navbar = () => {
             <img src={quickpayLogo} alt="logo" className="w-15 h-15" />
             <h1 className="text-xl font-bold">QuickPay</h1>
           </div>
-          {/* userinfo
-          <div className="w-full flex flex-row gap-2 items-center border-y-1 border-gray-200 py-4 pl-3">
-            <div className="w-10 h-10 bg-black rounded-full flex items-center justify-center text-white text-3xl cursor-pointer">
-              <User size={16} />
-            </div>
-            <div className="flex flex-col">
-              <h1 className="text-md font-bold">{user?.fullname}</h1>
-              <p className="text-xs text-black">{user?.email}</p>
-            </div>
-          </div> */}
+
           {/* navigations */}
           <div className="flex flex-col gap-2 mt-2 text-sm  pl-4 pr-2">
             {desktopNavItems.map((item, index) => (
