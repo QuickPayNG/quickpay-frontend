@@ -26,25 +26,25 @@ const Login = () => {
     }
   };
   return (
-    <div className="bg-background-light dark:bg-background-dark font-display">
+    <div className="bg-background dark:bg-background-dark font-display">
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-md p-8 space-y-6 bg-white dark:bg-background-dark rounded-xl shadow-lg">
+        <div className="w-full max-w-md p-8 space-y-6 dark:bg-white bg-[#1C190D] rounded-xl shadow-lg">
           <div className="text-center">
-            <h1 className="text-3xl font-bold text-black dark:text-white">
+            <h1 className="text-3xl font-bold dark:text-black text-white">
               Welcome Back to QuickPay
             </h1>
           </div>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div>
               <label
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium dark:text-gray-700 text-gray-300"
                 htmlFor="email"
               >
-                Email
+                Email *
               </label>
               <div className="mt-1">
                 <input
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 border-gray-300 dark:border-white/20 rounded-lg text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   id="email"
                   name="email"
                   required
@@ -54,16 +54,17 @@ const Login = () => {
                 />
               </div>
             </div>
+
             <div>
               <label
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium dark:text-gray-700 text-gray-300"
                 htmlFor="password"
               >
-                Password
+                Password *
               </label>
               <div className="mt-1">
                 <input
-                  className="w-full px-4 py-3 bg-gray-100 dark:bg-black/20 border-gray-300 dark:border-white/20 rounded-lg text-black dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   id="password"
                   name="password"
                   required
@@ -74,19 +75,18 @@ const Login = () => {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <a className="text-sm text-primary hover:underline" href="#">
+              <div className="text-sm text-primary hover:underline cursor-pointer">
                 Forgot Password?
-              </a>
+              </div>
             </div>
             <div>
-              <button
+              <Button
                 className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-black bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 type="submit"
                 disabled={isLoading}
-                onClick={handleLogin}
               >
                 {isLoading ? "Login in..." : "Login"}
-              </button>
+              </Button>
             </div>
           </form>
           <div className="relative">
@@ -101,7 +101,7 @@ const Login = () => {
           </div>
           <div>
             <Button
-              className="w-full inline-flex justify-center py-3 px-4 border border-gray-300 dark:border-white/20 rounded-lg shadow-sm bg-white dark:bg-black/20 text-sm font-medium text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-black/30"
+              className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30 cursor-pointer"
               type="button"
             >
               <svg

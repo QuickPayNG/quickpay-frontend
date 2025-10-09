@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { Link, ShieldCheck, History, TabletSmartphone } from "lucide-react"
+import { Link, ShieldCheck, History, TabletSmartphone } from "lucide-react";
 
 export default function FeaturesSection() {
   const features = [
@@ -22,9 +22,9 @@ export default function FeaturesSection() {
     {
       title: "Mobile-Friendly",
       desc: "Accept payments seamlessly on any device, from smartphones to tablets.",
-      icon:TabletSmartphone,
+      icon: TabletSmartphone,
     },
-  ]
+  ];
 
   return (
     <section id="features" className="py-25 px-6 max-w-screen-xl mx-auto">
@@ -50,5 +50,5 @@ export default function FeaturesSection() {
         ))}
       </div>
     </section>
-  )
+  );
 }
