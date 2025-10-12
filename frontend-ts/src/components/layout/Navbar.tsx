@@ -54,14 +54,12 @@ const mobileNavItems = [
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
- 
 
   const handleLogout = async () => {
     console.log("signing out");
 
     const hasSignout: any = await logout();
     if (hasSignout) {
-      
       console.log("signout successful");
     } else {
       console.log("an error occur");
@@ -112,13 +110,13 @@ const Navbar = () => {
 
       {/* mobile */}
 
-      <div className="sm:hidden flex w-full h-[70px] bg-background py-10 text-black fixed bottom-0  items-center border-t-1 border-gray-200 justify-evenly">
+      <div className="sm:hidden flex w-full h-[70px] bg-background py-10 text-text fixed bottom-0  items-center border-t-1 border-gray-200 justify-evenly">
         {mobileNavItems.map((item, index) =>
           item.isButton ? (
             <NavLink
               key={index}
               to={item.to}
-              className="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-black text-3xl cursor-pointer hover:scale-105 transition-transform"
+              className="w-14 h-14 bg-primary rounded-full flex items-center justify-center text-text text-3xl cursor-pointer hover:scale-105 transition-transform"
             >
               {item.icon}
             </NavLink>
@@ -126,7 +124,7 @@ const Navbar = () => {
             <NavLink
               key={index}
               to={item.to}
-              className="cursor-pointer hover:scale-105 transition-transform flex flex-col items-center text-black"
+              className="cursor-pointer hover:scale-105 transition-transform flex flex-col items-center text-text"
             >
               {item.icon}
               <span className="text-sm">{item.label}</span>

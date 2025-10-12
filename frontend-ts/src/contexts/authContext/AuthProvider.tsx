@@ -135,6 +135,38 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const uploadLink = async (
+    userId: string,
+    amount: number,
+    description: string,
+    name: string
+  ) => {
+    try {
+      const linkId = `${userId}-${Date.now()}`;
+      await setDoc(doc(db, "links", linkId), {
+        userId,
+        amount,
+        description,
+        name,
+        linkId,
+        createdAt: new Date(),
+      });
+      return linkId;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const generateLink = async (
+    amount: number,
+    description: string,
+    name: string
+  ) => {
+    console.log("Generating link with:", { amount, description, name });
+    const kinikan = await uploadLink(user.uid, amount, description, name);
+    console.log(kinikan);
+  };
+
   const value = {
     user,
     isAuthenticated,
@@ -142,6 +174,7 @@ export const AuthProvider = ({ children }: any) => {
     login,
     signup,
     logout,
+    generateLink,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
