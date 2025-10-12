@@ -163,7 +163,7 @@ const SignUP = () => {
               <Link
                 className="font-medium text-primary hover:underline"
                 to={"/login"}
-                onClick={(e) => e.preventDefault()}
+                
               >
                 Login here.
               </Link>

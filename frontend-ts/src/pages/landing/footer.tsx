@@ -16,7 +16,7 @@ export default function Footer() {
           </h2>
           <h2 className="text-2xl md:text-3xl font-bold mb-6">QuickPay.</h2>
           <Button
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/signup")}
             className="bg-primary hover:bg-primary/90 text-black px-6 py-3 rounded-lg font-semibold transition"
           >
             Sign Up Free

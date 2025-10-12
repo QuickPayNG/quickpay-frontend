@@ -66,6 +66,15 @@ export const router = createBrowserRouter([
             ),
           },
           {
+            path: "createlink",
+            element: (
+              <ProtectedRoute>
+                <Links />
+              </ProtectedRoute>
+            ),
+
+          },
+          {
             path: "rewards",
             element: (
               <ProtectedRoute>

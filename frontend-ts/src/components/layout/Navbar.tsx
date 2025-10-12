@@ -8,14 +8,14 @@ import {
   User,
 } from "lucide-react";
 import quickpayLogo from "../../assets/logo/quickpay.png";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 
 const desktopNavItems = [
   { to: "dashboard", label: "Dashboard", icon: <HomeIcon size={20} /> },
   { to: "links", label: "My Links", icon: <Link size={20} /> },
-  { to: "#", label: "Create Link", icon: <PlusIcon size={20} /> },
+  { to: "/createlink", label: "Create Link", icon: <PlusIcon size={20} /> },
   { to: "rewards", label: "Rewards", icon: <Gift size={20} /> },
   { to: "profile", label: "Profile", icon: <User size={20} /> },
 ];
@@ -33,7 +33,7 @@ const mobileNavItems = [
     isButton: false,
   },
   {
-    to: "#",
+    to: "createlink",
     label: "Create",
     icon: <PlusIcon size={30} />,
     isButton: true,
@@ -54,14 +54,14 @@ const mobileNavItems = [
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
-  const navigate = useNavigate();
+ 
 
   const handleLogout = async () => {
     console.log("signing out");
 
     const hasSignout: any = await logout();
     if (hasSignout) {
-      navigate("login");
+      
       console.log("signout successful");
     } else {
       console.log("an error occur");

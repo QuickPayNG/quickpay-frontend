@@ -73,8 +73,7 @@ export const AuthProvider = ({ children }: any) => {
       const user = userCredential.user;
       console.log(user);
       await uploadUserDetails(user.uid, fullname);
-      // toast.success("Account creation successfull, proceed to login");
-      toast.success("Account creation successfull.");
+      toast.success("Account creation successfull, proceed to login");
       await logout();
       return true;
     } catch (error: any) {
