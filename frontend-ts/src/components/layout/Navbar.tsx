@@ -15,7 +15,7 @@ import { AuthContext } from "@/contexts/authContext/AuthContext";
 const desktopNavItems = [
   { to: "dashboard", label: "Dashboard", icon: <HomeIcon size={20} /> },
   { to: "links", label: "My Links", icon: <Link size={20} /> },
-  { to: "/createlink", label: "Create Link", icon: <PlusIcon size={20} /> },
+  { to: "createlink", label: "Create Link", icon: <PlusIcon size={20} /> },
   { to: "rewards", label: "Rewards", icon: <Gift size={20} /> },
   { to: "profile", label: "Profile", icon: <User size={20} /> },
 ];

@@ -6,6 +6,7 @@ export default {
         primary: "var(--primary)",
         background: "var(--background)",
         text: "var(--text)",
+        card: "var(--card)",
       },
       borderRadius: {
         DEFAULT: "var(--radius)",
