@@ -9,7 +9,7 @@ const CreateLink = () => {
   return (
     <div className="font-display bg-background dark:bg-background-dark text-content-light dark:text-content-dark">
       <div className="min-h-screen flex flex-col">
-        <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        <div className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
               <h1 className="text-3xl md:text-4xl font-bold text-text dark:text-content-dark">
@@ -121,7 +121,7 @@ const CreateLink = () => {
               </div>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );
