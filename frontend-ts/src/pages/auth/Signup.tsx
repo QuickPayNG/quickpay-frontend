@@ -37,7 +37,7 @@ const SignUP = () => {
   return (
     <div className="bg-background dark:bg-background-dark font-display">
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
-        <div className="w-full max-w-md dark:bg-white bg-[#1C190D] shadow-xl rounded-xl p-8 space-y-6">
+        <div className="w-full max-w-md dark:bg-white bg-card shadow-xl rounded-xl p-8 space-y-6">
           <div className="flex flex-col items-center space-y-4">
             <h1 className="text-3xl font-bold dark:text-gray-900 text-white text-center">
               Create Your QuickPay Account
@@ -163,7 +163,6 @@ const SignUP = () => {
               <Link
                 className="font-medium text-primary hover:underline"
                 to={"/login"}
-                
               >
                 Login here.
               </Link>

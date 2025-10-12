@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button";
 
 const CreateLink = () => {
+  const handleGenerate = (e: any) => {
+    e.preventDefault();
+    console.log("generated");
+  };
+
   return (
-    <body className="font-display bg-background dark:bg-background-dark text-content-light dark:text-content-dark">
+    <div className="font-display bg-background dark:bg-background-dark text-content-light dark:text-content-dark">
       <div className="min-h-screen flex flex-col">
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
           <div className="max-w-3xl mx-auto">
@@ -16,17 +21,17 @@ const CreateLink = () => {
               </p>
             </div>
             <div className="bg-card dark:bg-subtle-dark rounded-xl shadow-lg p-6 md:p-8">
-              <form className="space-y-6" id="payment-form">
+              <form className="space-y-6" onSubmit={handleGenerate}>
                 <div>
                   <label
-                    className="block text-sm font-medium text-content-light dark:text-content-dark mb-1"
+                    className="block text-sm font-medium dark:text-gray-700 text-gray-300"
                     htmlFor="amount"
                   >
                     Amount (₦)
                   </label>
 
                   <input
-                    className="w-full pl-8 pr-12 bg-subtle-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-lg h-12 focus:ring-primary focus:border-primary text-content-light dark:text-content-dark placeholder:text-content-light/50 dark:placeholder:text-content-dark/50"
+                    className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                     id="amount"
                     name="amount"
                     placeholder="0.00"
@@ -36,13 +41,13 @@ const CreateLink = () => {
 
                 <div>
                   <label
-                    className="block text-sm font-medium text-content-light dark:text-content-dark mb-1"
+                    className="block text-sm font-medium dark:text-gray-700 text-gray-300"
                     htmlFor="description"
                   >
                     Description
                   </label>
                   <textarea
-                    className="w-full bg-subtle-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-lg p-3 focus:ring-primary focus:border-primary text-content-light dark:text-content-dark placeholder:text-content-light/50 dark:placeholder:text-content-dark/50"
+                    className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                     id="description"
                     name="description"
                     placeholder="e.g., Payment for design services"
@@ -50,24 +55,24 @@ const CreateLink = () => {
                 </div>
                 <div>
                   <label
-                    className="block text-sm font-medium text-content-light dark:text-content-dark mb-1"
+                    className="block text-sm font-medium dark:text-gray-700 text-gray-300"
                     htmlFor="name"
                   >
                     Customer Name (Optional)
                   </label>
                   <input
-                    className="w-full bg-subtle-light dark:bg-background-dark border-border-light dark:border-border-dark rounded-lg h-12 px-3 focus:ring-primary focus:border-primary text-content-light dark:text-content-dark placeholder:text-content-light/50 dark:placeholder:text-content-dark/50"
+                    className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                     id="name"
                     name="name"
                     placeholder="John Doe"
                     type="text"
                   />
-                  <p className="mt-2 text-xs text-content-light/70 dark:text-content-dark/70">
+                  <p className="mt-2 text-xs text-text/70 dark:text-content-dark/70">
                     A receipt will be sent to this email.
                   </p>
                 </div>
                 <Button
-                  className="w-full bg-primary text-background font-bold py-3 px-4 rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-subtle-dark transition-all duration-300 transform"
+                  className="w-full bg-primary text-background font-bold py-3 px-4 cursor-pointer rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-subtle-dark transition-all duration-300 transform"
                   type="submit"
                 >
                   Generate Link
@@ -114,15 +119,11 @@ const CreateLink = () => {
                   </button>
                 </div>
               </div>
-              <p
-                className="text-center text-sm text-green-500 mt-2 h-4"
-                id="copy-feedback"
-              ></p>
             </div>
           </div>
         </main>
       </div>
-    </body>
+    </div>
   );
 };
 export default CreateLink;
