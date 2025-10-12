@@ -162,6 +162,42 @@ export const AuthProvider = ({ children }: any) => {
     description: string,
     name: string
   ) => {
+    setIsLoading(true);
+
+    const url = "https://api.paystack.co/transaction/initialize";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${import.meta.env.VITE_SECRET_KEY}`,
+      },
+
+      body: JSON.stringify({
+        email: name,
+        amount: amount * 100,
+        callback_url: "https://quickpay-alpha.vercel.app/verify",
+        channels: ["bank"],
+        metadata: {
+          custom_filters: {
+            recurring: true,
+          },
+        },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoading(false);
+        toast.success("Payment link generated successfully", {
+          duration: 4000,
+        });
+
+        console.log(data);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        toast.error("Error generating payment link", { duration: 4000 });
+        console.error("Error:", err);
+      });
     console.log("Generating link with:", { amount, description, name });
     const kinikan = await uploadLink(user.uid, amount, description, name);
     console.log(kinikan);
