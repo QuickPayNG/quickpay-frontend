@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <div className="bg-background dark:bg-background-dark font-display">
       <div className="flex items-center justify-center min-h-screen">
-        <div className="w-full max-w-md p-8 space-y-6 dark:bg-white bg-[#1C190D] rounded-xl shadow-lg">
+        <div className="w-full max-w-md p-8 space-y-6 dark:bg-white bg-card rounded-xl shadow-lg">
           <div className="text-center">
             <h1 className="text-3xl font-bold dark:text-black text-white">
               Welcome Back to QuickPay
@@ -89,16 +89,7 @@ const Login = () => {
               </Button>
             </div>
           </form>
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-white/20"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white dark:bg-background-dark text-gray-500 dark:text-gray-400">
-                Or continue with
-              </span>
-            </div>
-          </div>
+
           <div>
             <Button
               className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30 cursor-pointer"

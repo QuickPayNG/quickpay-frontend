@@ -73,8 +73,7 @@ export const AuthProvider = ({ children }: any) => {
       const user = userCredential.user;
       console.log(user);
       await uploadUserDetails(user.uid, fullname);
-      // toast.success("Account creation successfull, proceed to login");
-      toast.success("Account creation successfull.");
+      toast.success("Account creation successfull, proceed to login");
       await logout();
       return true;
     } catch (error: any) {
@@ -136,6 +135,38 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
+  const uploadLink = async (
+    userId: string,
+    amount: number,
+    description: string,
+    name: string
+  ) => {
+    try {
+      const linkId = `${userId}-${Date.now()}`;
+      await setDoc(doc(db, "links", linkId), {
+        userId,
+        amount,
+        description,
+        name,
+        linkId,
+        createdAt: new Date(),
+      });
+      return linkId;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const generateLink = async (
+    amount: number,
+    description: string,
+    name: string
+  ) => {
+    console.log("Generating link with:", { amount, description, name });
+    const kinikan = await uploadLink(user.uid, amount, description, name);
+    console.log(kinikan);
+  };
+
   const value = {
     user,
     isAuthenticated,
@@ -143,6 +174,7 @@ export const AuthProvider = ({ children }: any) => {
     login,
     signup,
     logout,
+    generateLink,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

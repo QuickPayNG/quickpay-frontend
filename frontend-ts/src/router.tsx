@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import RootLayout from "./RootLayout";
 import Rewards from "./pages/dashboard/Rewards";
 import Waitlist from "./pages/waitlist/Waitlist";
+import CreateLink from "./pages/dashboard/CreateLink";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +65,15 @@ export const router = createBrowserRouter([
                 <Links />
               </ProtectedRoute>
             ),
+          },
+          {
+            path: "createlink",
+            element: (
+              <ProtectedRoute>
+              <CreateLink />
+              </ProtectedRoute>
+            ),
+
           },
           {
             path: "rewards",

@@ -7,9 +7,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
 import { useContext } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const transactions = [
     { ref: "REF12345", amount: "$50.00", status: "Paid", date: "2024-01-15" },
     {
@@ -92,7 +94,10 @@ export default function Dashboard() {
 
       {/* Create New Link Button */}
       <div className="flex justify-end">
-        <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md px-5 py-2 sm:px-6">
+        <Button
+          onClick={() => navigate("/createlink")}
+          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md px-5 py-2 sm:px-6"
+        >
           + Create New Link
         </Button>
       </div>
@@ -159,6 +164,7 @@ export default function Dashboard() {
           <Button
             variant="secondary"
             className="bg-[#1a1a1a] text-white hover:bg-[#222] px-4 sm:px-6"
+            onClick={() => navigate("/links")}
           >
             View All Links
           </Button>
