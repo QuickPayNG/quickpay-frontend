@@ -1,9 +1,10 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@/contexts/authContext/AuthContext";
+import { useContext } from "react";
 
 const Links = () => {
-  const navigate = useNavigate();
+  const { links } = useContext(AuthContext);
   const transactions = [
     { ref: "REF12345", amount: "$50.00", status: "Paid", date: "2024-01-15" },
     {
@@ -99,58 +100,76 @@ const Links = () => {
           {/* Recent Transactions */}
           <section className="bg-card rounded-xl p-4">
             {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto">
-              <table className="w-full text-left text-sm">
-                <thead className="text-gray-400 border-b border-gray-700">
-                  <tr>
-                    <th className="pb-2">Reference</th>
-                    <th className="pb-2">Amount</th>
-                    <th className="pb-2">Status</th>
-                    <th className="pb-2">Date</th>
-                  </tr>
-                </thead>
-                <tbody className="text-gray-400">
-                  {transactions.map((t) => (
-                    <tr
-                      key={t.ref}
-                      className="border-b border-gray-800 hover:bg-[#1a1a1c] transition"
-                    >
-                      <td className="py-3">{t.ref}</td>
-                      <td className="py-3">{t.amount}</td>
-                      <td className="py-3">{getStatusBadge(t.status)}</td>
-                      <td className="py-3 text-gray-400">{t.date}</td>
+            {links.length > 0 ? (
+              <div className="hidden md:block overflow-x-auto mt-10">
+                <table className="w-full text-left text-sm">
+                  <thead className="text-gray-400 border-b border-gray-700">
+                    <tr>
+                      <th className="pb-2">Reference</th>
+                      <th className="pb-2">Amount</th>
+                      <th className="pb-2">Status</th>
+                      <th className="pb-2">Date</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {links.slice(0, 5).map((t) => (
+                      <tr
+                        key={t.id}
+                        className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
+                      >
+                        <td className="py-3">{t.reference}</td>
+                        <td className="py-3">{t.amount}</td>
+                        <td className="py-3">{getStatusBadge(t.status)}</td>
+                        <td className="py-3">
+                          {new Date(
+                            t.createdAt?.seconds * 1000
+                          ).toLocaleString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="text-gray-400 text-center py-10 hidden md:block">
+                No payment links found. Create your first link!
+              </p>
+            )}
 
             {/* Mobile Card View */}
-            <div className="md:hidden space-y-3">
-              {transactions.map((t) => (
-                <div
-                  key={t.ref}
-                  className="p-3 rounded-lg bg-[#1a1a1c] text-gray-400 flex flex-col gap-2 border border-gray-800"
-                >
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Reference</span>
-                    <span>{t.ref}</span>
+            {links.length > 0 ? (
+              <div className="md:hidden space-y-3 mt-10">
+                {links.slice(0, 5).map((t) => (
+                  <div
+                    key={t.ref}
+                    className="p-3 rounded-lg bg-[#1a1a1c] flex flex-col gap-2 border border-gray-800"
+                  >
+                    <div className="flex justify-between text-gray-400 text-sm">
+                      <span>Reference</span>
+                      <span>{t.reference}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-400 text-sm">
+                      <span>Amount</span>
+                      <span>{t.amount}</span>
+                    </div>
+                    <div className="flex justify-between text-gray-400 text-sm items-center">
+                      <span>Status</span>
+                      {getStatusBadge(t.status)}
+                    </div>
+                    <div className="flex justify-between text-gray-400 text-sm">
+                      <span>Date</span>
+                      <span>
+                        {new Date(t.createdAt?.seconds * 1000).toLocaleString()}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Amount</span>
-                    <span>{t.amount}</span>
-                  </div>
-                  <div className="flex justify-between text-sm items-center">
-                    <span className="text-gray-400">Status</span>
-                    {getStatusBadge(t.status)}
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-400">Date</span>
-                    <span>{t.date}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-400 text-center py-10 md:hidden">
+                No payment links found. Create your first link!
+              </p>
+            )}
           </section>
         </div>
       </div>
