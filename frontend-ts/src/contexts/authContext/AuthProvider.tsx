@@ -7,7 +7,14 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 import toast from "react-hot-toast";
 
 export const AuthProvider = ({ children }: any) => {
@@ -135,72 +142,66 @@ export const AuthProvider = ({ children }: any) => {
     }
   };
 
-  const uploadLink = async (
-    userId: string,
-    amount: number,
-    description: string,
-    name: string
-  ) => {
+  const uploadLink = async (userId: string, data: any) => {
     try {
-      const linkId = `${userId}-${Date.now()}`;
-      await setDoc(doc(db, "links", linkId), {
-        userId,
-        amount,
-        description,
-        name,
-        linkId,
-        createdAt: new Date(),
+      const linksRef = collection(db, "users", userId, "links");
+      const docRef = await addDoc(linksRef, {
+        reference: data.reference,
+        amount: data.amount,
+        description: data.description,
+        status: "pending",
+        createdAt: serverTimestamp(),
       });
-      return linkId;
+      console.log("Link created with ID: ", docRef.id);
     } catch (error) {
-      console.log(error);
+      console.error("Error creating link: ", error);
     }
   };
 
   const generateLink = async (
     amount: number,
     description: string,
-    name: string
+    name: string,
+    email: string
   ) => {
     setIsLoading(true);
-
+    const toastId = toast.loading("Generating payment link...");
     const url = "https://api.paystack.co/transaction/initialize";
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_SECRET_KEY}`,
-      },
-
-      body: JSON.stringify({
-        email: name,
-        amount: amount * 100,
-        callback_url: "https://quickpay-alpha.vercel.app/verify",
-        channels: ["bank"],
-        metadata: {
-          custom_filters: {
-            recurring: true,
-          },
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${import.meta.env.VITE_SECRET_KEY}`,
         },
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setIsLoading(false);
-        toast.success("Payment link generated successfully", {
-          duration: 4000,
-        });
 
-        console.log(data);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        toast.error("Error generating payment link", { duration: 4000 });
-        console.error("Error:", err);
+        body: JSON.stringify({
+          email: email || "customer@email.com",
+          amount: amount * 100,
+          callback_url: "https://quickpay-alpha.vercel.app/verify",
+          channels: ["bank"],
+          metadata: {
+            name: name || "Customer",
+            description: description,
+            custom_filters: {
+              recurring: true,
+            },
+          },
+        }),
       });
-    console.log("Generating link with:", { amount, description, name });
-    const kinikan = await uploadLink(user.uid, amount, description, name);
-    console.log(kinikan);
+      const data = await response.json();
+      console.log(data);
+      // const kinikan = await uploadLink(user.uid, data);
+      toast.success("Payment link generated successfully");
+      // console.log(kinikan);
+      return data.data.authorization_url;
+    } catch (err) {
+      console.log(err);
+      toast.error("Error generating payment link");
+    } finally {
+      toast.dismiss(toastId);
+      setIsLoading(false);
+    }
   };
 
   const value = {

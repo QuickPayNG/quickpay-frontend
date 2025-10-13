@@ -7,7 +7,12 @@ type AuthContextType = {
   login: (email: string, password: string) => void;
   signup: (fullname: string, email: string, password: string) => void;
   logout: () => void;
-  generateLink: (amount: number, description: string, name: string) => void;
+  generateLink: (
+    amount: number,
+    description: string,
+    name: string,
+    email: string
+  ) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
