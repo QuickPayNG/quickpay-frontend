@@ -5,18 +5,6 @@ import { useContext } from "react";
 
 const Links = () => {
   const { links } = useContext(AuthContext);
-  const transactions = [
-    { ref: "REF12345", amount: "$50.00", status: "Paid", date: "2024-01-15" },
-    {
-      ref: "REF67890",
-      amount: "$75.00",
-      status: "Pending",
-      date: "2024-01-16",
-    },
-    { ref: "REF11223", amount: "$100.00", status: "Paid", date: "2024-01-17" },
-    { ref: "REF33445", amount: "$25.00", status: "Failed", date: "2024-01-18" },
-    { ref: "REF55667", amount: "$60.00", status: "Paid", date: "2024-01-19" },
-  ];
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -118,7 +106,7 @@ const Links = () => {
                         className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
                       >
                         <td className="py-3">{t.reference}</td>
-                        <td className="py-3">{t.amount}</td>
+                        <td className="py-3">₦ {t.amount}</td>
                         <td className="py-3">{getStatusBadge(t.status)}</td>
                         <td className="py-3">
                           {new Date(
@@ -150,7 +138,7 @@ const Links = () => {
                     </div>
                     <div className="flex justify-between text-gray-400 text-sm">
                       <span>Amount</span>
-                      <span>{t.amount}</span>
+                      <span>₦ {t.amount}</span>
                     </div>
                     <div className="flex justify-between text-gray-400 text-sm items-center">
                       <span>Status</span>
