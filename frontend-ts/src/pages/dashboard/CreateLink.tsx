@@ -11,7 +11,7 @@ const CreateLink = () => {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
 
-  const { generateLink } = useContext(AuthContext);
+  const { isLoading, generateLink } = useContext(AuthContext);
 
   const handleGenerate = async (e: any) => {
     e.preventDefault();
@@ -54,8 +54,8 @@ const CreateLink = () => {
                     id="amount"
                     name="amount"
                     required
-                    placeholder="0.00"
                     type="number"
+                    min={100}
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
                   />
@@ -115,10 +115,11 @@ const CreateLink = () => {
                   </p>
                 </div>
                 <Button
-                  className="w-full bg-primary text-background font-bold py-3 px-4 cursor-pointer rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-subtle-dark transition-all duration-300 transform"
+                  className="w-full bg-primary text-background font-bold py-3 px-4 cursor-pointer rounded-lg hover:bg-primary/90 transition-all duration-300 transform"
                   type="submit"
+                  disabled={isLoading}
                 >
-                  Generate Link
+                  {isLoading ? "Generating..." : "Generate Link"}
                 </Button>
               </form>
             </div>
