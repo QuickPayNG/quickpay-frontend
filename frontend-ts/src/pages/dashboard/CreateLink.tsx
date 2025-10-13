@@ -1,9 +1,28 @@
 import { Button } from "@/components/ui/button";
+import { AuthContext } from "@/contexts/authContext/AuthContext";
+import { CheckCircle } from "lucide-react";
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 const CreateLink = () => {
-  const handleGenerate = (e: any) => {
+  const [email, setEmail] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [description, setDescription] = useState("");
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+
+  const { isLoading, generateLink } = useContext(AuthContext);
+
+  const handleGenerate = async (e: any) => {
     e.preventDefault();
-    console.log("generated");
+    if (!amount) {
+      toast.error("Please fill in the amount");
+      return;
+    }
+    const link: any = await generateLink(amount, description, name, email);
+    if (link) {
+      setLink(link);
+    }
   };
 
   return (
@@ -34,8 +53,11 @@ const CreateLink = () => {
                     className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                     id="amount"
                     name="amount"
-                    placeholder="0.00"
+                    required
                     type="number"
+                    min={100}
+                    value={amount}
+                    onChange={(e) => setAmount(Number(e.target.value))}
                   />
                 </div>
 
@@ -51,6 +73,8 @@ const CreateLink = () => {
                     id="description"
                     name="description"
                     placeholder="e.g., Payment for design services"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   ></textarea>
                 </div>
                 <div>
@@ -66,60 +90,76 @@ const CreateLink = () => {
                     name="name"
                     placeholder="John Doe"
                     type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-sm font-medium dark:text-gray-700 text-gray-300"
+                    htmlFor="email"
+                  >
+                    Customer Email (Optional)
+                  </label>
+                  <input
+                    className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    id="email"
+                    name="email"
+                    placeholder="customer@email.com"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <p className="mt-2 text-xs text-text/70 dark:text-content-dark/70">
                     A receipt will be sent to this email.
                   </p>
                 </div>
                 <Button
-                  className="w-full bg-primary text-background font-bold py-3 px-4 cursor-pointer rounded-lg hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary focus:ring-offset-background-light dark:focus:ring-offset-subtle-dark transition-all duration-300 transform"
+                  className="w-full bg-primary text-background font-bold py-3 px-4 cursor-pointer rounded-lg hover:bg-primary/90 transition-all duration-300 transform"
                   type="submit"
+                  disabled={isLoading}
                 >
-                  Generate Link
+                  {isLoading ? "Generating..." : "Generate Link"}
                 </Button>
               </form>
             </div>
-            <div
-              className="mt-8 bg-subtle-light dark:bg-subtle-dark rounded-xl shadow-lg p-6 md:p-8 hidden"
-              id="confirmation-section"
-            >
-              <div className="text-center">
-                <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                  <span className="material-symbols-outlined text-green-600">
-                    check_circle
-                  </span>
+            {link && (
+              <div
+                className="mt-8 bg-card rounded-xl shadow-lg p-6 md:p-8 "
+                id="confirmation-section"
+              >
+                <div className="text-center">
+                  <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+                    <CheckCircle className="text-green-600" />
+                  </div>
+                  <h3 className="mt-4 text-lg font-medium text-text dark:text-content-dark">
+                    Your payment link has been created!
+                  </h3>
                 </div>
-                <h3 className="mt-4 text-lg font-medium text-content-light dark:text-content-dark">
-                  Your payment link has been created!
-                </h3>
-              </div>
-              <div className="mt-6 p-3 bg-background-light dark:bg-background-dark rounded-lg flex items-center justify-between space-x-2">
-                <p
-                  className="text-sm text-content-light dark:text-content-dark truncate"
-                  id="generated-link"
-                >
-                  https://quickpay.com/pay/1234567890
-                </p>
-                <div className="flex items-center space-x-2">
-                  <button
-                    className="p-2 rounded-full hover:bg-primary/20 dark:hover:bg-primary/30 text-primary transition-colors"
-                    id="copy-button"
-                  >
-                    <span className="material-symbols-outlined text-base">
-                      content_copy
-                    </span>
-                  </button>
-                  <button
-                    className="p-2 rounded-full hover:bg-primary/20 dark:hover:bg-primary/30 text-primary transition-colors"
-                    id="share-button"
-                  >
-                    <span className="material-symbols-outlined text-base">
+                <div className="mt-6 p-3 border-1 border-gray-300 bg-background dark:bg-background-dark rounded-lg flex items-center justify-between gap-2">
+                  <p className="font-italic text-text dark:text-content-dark truncate">
+                    {link}
+                  </p>
+                  <div className="flex items-center gap-2 sm:gap-6">
+                    <Button
+                      className="p-2 sm:py-2 sm:px-4 rounded-md hover:bg-primary/70 dark:hover:bg-primary/30 text-background transition-colors"
+                      onClick={() => {
+                        navigator.clipboard.writeText(link);
+                        toast("Link copied to clipboard");
+                      }}
+                    >
+                      copy
+                    </Button>
+                    <Button
+                      variant={"outline"}
+                      className="p-2 sm:px-4 sm:py-2 rounded-sm hover:bg-primary dark:hover:bg-primary/30 text-primary transition-colors"
+                    >
                       share
-                    </span>
-                  </button>
+                    </Button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
