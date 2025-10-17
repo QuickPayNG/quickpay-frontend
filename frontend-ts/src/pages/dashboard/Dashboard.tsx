@@ -22,7 +22,7 @@ export default function Dashboard() {
   const getTotalEarnings = () => {
     if (links.length === 0) return 0;
     return links.reduce((total, link) => {
-      if (link.status === "paid") {
+      if (link.status === "success") {
         return total + link.amount;
       }
       return total;
@@ -31,7 +31,7 @@ export default function Dashboard() {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "Paid":
+      case "success":
         return (
           <Badge className="bg-green-600 text-white flex items-center gap-1">
             <span></span> Paid

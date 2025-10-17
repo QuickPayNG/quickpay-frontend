@@ -55,7 +55,7 @@ const Profile = () => {
           {/* Tabs Navigation */}
           <div className="mb-8">
             <div className="border-b border-gray-700 ">
-              <nav aria-label="Tabs" className="-mb-px flex space-x-8">
+              <nav aria-label="Tabs" className="-mb-px flex space-x-4 sm:space-x-8">
                 <a
                   className="border-primary text-primary whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
                   href="#"

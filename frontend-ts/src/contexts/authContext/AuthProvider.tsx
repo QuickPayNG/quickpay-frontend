@@ -191,11 +191,12 @@ export const AuthProvider = ({ children }: any) => {
         body: JSON.stringify({
           email: email || "customer@email.com",
           amount: amount * 100,
-          callback_url: "https://quickpay-alpha.vercel.app/verify",
-          channels: ["bank"],
+          callback_url: "http://localhost:5173/verify",
+          channels: ["bank", "card", "ussd"],
           metadata: {
             name: name || "Customer",
             description: description,
+            userId: user.uid,
             custom_filters: {
               recurring: true,
             },
