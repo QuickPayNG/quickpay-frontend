@@ -141,7 +141,7 @@ export default function Dashboard() {
                     className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
                   >
                     <td className="py-3">{t.reference}</td>
-                    <td className="py-3">₦ {t.amount}</td>
+                    <td className="py-3">₦ {t.amount.toLocaleString()}</td>
                     <td className="py-3">{getStatusBadge(t.status)}</td>
                     <td className="py-3">
                       {new Date(t.createdAt?.seconds * 1000).toLocaleString()}
@@ -171,7 +171,7 @@ export default function Dashboard() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Amount</span>
-                  <span>₦ {t.amount}</span>
+                  <span>₦ {t.amount.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm items-center">
                   <span className="text-gray-400">Status</span>
