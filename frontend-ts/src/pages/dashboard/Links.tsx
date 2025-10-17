@@ -8,7 +8,7 @@ const Links = () => {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case "Paid":
+      case "success":
         return (
           <Badge className="bg-green-600 text-white flex items-center gap-1">
             <span></span> Paid

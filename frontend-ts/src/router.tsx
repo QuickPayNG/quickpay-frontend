@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import RootLayout from "./RootLayout";
 import Rewards from "./pages/dashboard/Rewards";
 import Waitlist from "./pages/waitlist/Waitlist";
+import Verify from "./pages/verify/Verify";
 import CreateLink from "./pages/dashboard/CreateLink";
 
 export const router = createBrowserRouter([
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
       {
         path: "/waitlist/:name",
         element: <Waitlist />,
+      },
+      {
+        path: "/verify",
+        element: <Verify />,
       },
       {
         path: "/login",
