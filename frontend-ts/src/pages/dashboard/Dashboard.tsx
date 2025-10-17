@@ -2,13 +2,14 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { getInitials } from "@/lib/utils";
+import TransactionTable from "@/components/ui/TransactionTable";
 
 export default function Dashboard() {
   const { user, links } = useContext(AuthContext);
@@ -29,33 +30,8 @@ export default function Dashboard() {
     }, 0);
   };
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "success":
-        return (
-          <Badge className="bg-green-600 text-white flex items-center gap-1">
-            <span></span> Paid
-          </Badge>
-        );
-      case "Pending":
-        return (
-          <Badge className="bg-yellow-600 text-white flex items-center gap-1">
-            <span></span> Pending
-          </Badge>
-        );
-      case "Failed":
-        return (
-          <Badge className="bg-red-600 text-white flex items-center gap-1">
-            <span></span> Failed
-          </Badge>
-        );
-      default:
-        return <Badge>{status}</Badge>;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#151518] text-white p-4 sm:p-6 space-y-8">
+    <div className="min-h-screen relative bg-[#151518] text-white p-4 sm:p-6 space-y-8">
       {/* Header */}
       <header className="flex flex-row justify-between items-center gap-4">
         <h1 className="text-xl sm:text-2xl font-semibold">
@@ -121,76 +97,7 @@ export default function Dashboard() {
         <h2 className="text-lg text-center font-semibold">
           Recent Transactions
         </h2>
-
-        {/* Desktop Table */}
-        {links?.length > 0 ? (
-          <div className="hidden md:block overflow-x-auto mt-10">
-            <table className="w-full text-left text-sm">
-              <thead className="text-gray-400 border-b border-gray-700">
-                <tr>
-                  <th className="pb-2">Reference</th>
-                  <th className="pb-2">Amount</th>
-                  <th className="pb-2">Status</th>
-                  <th className="pb-2">Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {links?.slice(0, 5).map((t) => (
-                  <tr
-                    key={t.id}
-                    className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
-                  >
-                    <td className="py-3">{t.reference}</td>
-                    <td className="py-3">₦ {t.amount.toLocaleString()}</td>
-                    <td className="py-3">{getStatusBadge(t.status)}</td>
-                    <td className="py-3">
-                      {new Date(t.createdAt?.seconds * 1000).toLocaleString()}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p className="text-gray-400 text-center py-10 hidden md:block">
-            No payment links found. Create your first link!
-          </p>
-        )}
-
-        {/* Mobile Card View */}
-        {links?.length > 0 ? (
-          <div className="md:hidden space-y-3 mt-10">
-            {links.slice(0, 5).map((t) => (
-              <div
-                key={t.id}
-                className="p-3 rounded-lg text-gray-400 bg-[#1a1a1c] flex flex-col gap-2 border border-gray-800"
-              >
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Reference</span>
-                  <span>{t.reference}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Amount</span>
-                  <span>₦ {t.amount.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between text-sm items-center">
-                  <span className="text-gray-400">Status</span>
-                  {getStatusBadge(t.status)}
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">Date</span>
-                  <span>
-                    {new Date(t.createdAt?.seconds * 1000).toLocaleString()}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-400 text-center py-10 md:hidden">
-            No payment links found. Create your first link!
-          </p>
-        )}
+        <TransactionTable links={links} />
 
         {links?.length > 0 && (
           <div className="flex justify-end mt-4">
