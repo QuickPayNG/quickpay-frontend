@@ -8,6 +8,7 @@ import { Bell } from "lucide-react";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { getInitials } from "@/lib/utils";
 
 export default function Dashboard() {
   const { user, links } = useContext(AuthContext);
@@ -61,12 +62,15 @@ export default function Dashboard() {
           Welcome back,{" "}
           <span className="block sm:inline">{user?.fullname}</span>
         </h1>
-        <div className="flex items-center gap-4 self-end sm:self-auto">
+        <div className="flex items-center gap-4 self-end sm:self-auto cursor-pointer">
           <Bell className="text-gray-300 w-5 h-5 sm:w-6 sm:h-6" />
-          <Avatar className="border border-gray-700 w-9 h-9 sm:w-10 sm:h-10">
+          <Avatar
+            onClick={() => navigate("/profile")}
+            className="border border-gray-700 w-9 h-9 sm:w-10 sm:h-10"
+          >
             {/* <AvatarImage src="/avatar.png" alt="Sarah" /> */}
-            <AvatarFallback className="text-gray-500 font-bold text-3xl">
-              {user?.fullname ? user.fullname.charAt(0).toUpperCase() : "U"}
+            <AvatarFallback className="text-gray-500 font-bold text-2xl">
+              {getInitials(user?.fullname)}
             </AvatarFallback>
           </Avatar>
         </div>
@@ -74,7 +78,7 @@ export default function Dashboard() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="bg-[#111112] border-0 border-l-4 border-yellow-500">
+        <Card className="bg-[#111112] border-0 border-l-4 border-primary">
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Total Earnings</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
@@ -83,7 +87,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#111112] border-0 border-l-4 border-yellow-500">
+        <Card className="bg-[#111112] border-0 border-l-4 border-primary">
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Payment Links Created</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
@@ -92,7 +96,7 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#111112] border-0 border-l-4 border-yellow-500">
+        <Card className="bg-[#111112] border-0 border-l-4 border-primary">
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Customers Served</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
@@ -106,7 +110,7 @@ export default function Dashboard() {
       <div className="flex justify-end">
         <Button
           onClick={() => navigate("/createlink")}
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md px-5 py-2 sm:px-6"
+          className="bg-primary hover:bg-primary/90 text-black font-semibold rounded-md px-5 py-2 sm:px-6"
         >
           + Create New Link
         </Button>

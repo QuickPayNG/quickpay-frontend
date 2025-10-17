@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { auth, db } from "../../lib/firebaseConfig";
 import {
@@ -35,6 +35,7 @@ export const AuthProvider = ({ children }: any) => {
         setUser({
           uid: currentUser.uid,
           email: currentUser.email,
+          createdAt: currentUser.metadata.creationTime,
           ...(userData || {}),
         });
         setIsAuthenticated(true);
@@ -113,7 +114,12 @@ export const AuthProvider = ({ children }: any) => {
       console.log("user", user);
       const userData = await fetchUserDetails(user.uid);
       console.log(userData);
-      setUser({ uid: user.uid, email: user.email, ...(userData || {}) });
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        createdAt: user.metadata.creationTime,
+        ...(userData || {}),
+      });
       toast.success("Logged In");
       setIsAuthenticated(true);
       return true;

@@ -1,8 +1,21 @@
+import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
+import { getInitials } from "@/lib/utils";
 import { useContext } from "react";
 
 const Profile = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
+
+  const handleLogout = async () => {
+    console.log("signing out");
+
+    const hasSignout: any = await logout();
+    if (hasSignout) {
+      console.log("signout successful");
+    } else {
+      console.log("an error occur");
+    }
+  };
   return (
     <div className="flex flex-col min-h-screen bg-background text-text">
       {/* Main Content */}
@@ -16,22 +29,20 @@ const Profile = () => {
           <div className="bg-background-light dark:bg-background-dark border border-gray-700  rounded-lg shadow-sm p-6 mb-8">
             <div className="flex items-center space-x-6">
               <div className="w-24 h-24 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-3xl font-bold text-primary">
-                SC
+                {getInitials(user?.fullname)}
               </div>
               <div className="flex-grow">
                 <h2 className="text-2xl font-bold text-content-light dark:text-content-dark">
                   {user?.fullname}
                 </h2>
-                <p className="text-subtle-light dark:text-subtle-dark">
-                  {user?.email}
-                </p>
-                <p className="text-sm text-subtle-light dark:text-subtle-dark mt-1">
-                  Member since: Jan 2022
+                <p className="text-text dark:text-subtle-dark">{user?.email}</p>
+                <p className="text-sm text-text dark:text-subtle-dark mt-1">
+                  Member since: {new Date(user?.createdAt)!.toDateString()}
                 </p>
               </div>
-              <button className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-4 rounded transition-colors duration-200">
+              <Button className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-4 rounded transition-colors duration-200">
                 Edit Profile
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -79,7 +90,7 @@ const Profile = () => {
                     id="full_name"
                     name="full_name"
                     type="text"
-                    defaultValue="Sophia Carter"
+                    defaultValue={user?.fullname}
                     className="mt-1 block w-full bg-surface-light dark:bg-surface-dark border-gray-700  rounded shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                   />
                 </div>
@@ -94,7 +105,7 @@ const Profile = () => {
                     id="email"
                     name="email"
                     type="email"
-                    defaultValue="sophia.carter@email.com"
+                    defaultValue={user?.email}
                     className="mt-1 block w-full bg-surface-light dark:bg-surface-dark border-gray-700  rounded shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                   />
                 </div>
@@ -109,7 +120,7 @@ const Profile = () => {
                     id="phone"
                     name="phone"
                     type="tel"
-                    defaultValue="+1 (555) 123-4567"
+                    defaultValue={user?.phonenumber || "Null"}
                     className="mt-1 block w-full bg-surface-light dark:bg-surface-dark border-gray-700  rounded shadow-sm focus:ring-primary focus:border-primary sm:text-sm"
                   />
                 </div>
@@ -122,7 +133,7 @@ const Profile = () => {
                 Security Settings
               </h3>
               <div className="space-y-4">
-                <button className="w-full text-left py-3 px-4 bg-surface-light dark:bg-surface-dark hover:bg-primary/10 rounded-lg transition-colors duration-200 flex justify-between items-center">
+                <Button className="w-full text-left py-3 px-4 bg-surface-light dark:bg-surface-dark hover:bg-primary/10 rounded-lg transition-colors duration-200 flex justify-between items-center">
                   <span>Change Password</span>
                   <svg
                     className="h-5 w-5 text-subtle-light dark:text-subtle-dark"
@@ -136,7 +147,7 @@ const Profile = () => {
                       fillRule="evenodd"
                     />
                   </svg>
-                </button>
+                </Button>
                 <div className="flex items-center justify-between py-3 px-4 bg-surface-light dark:bg-surface-dark rounded-lg">
                   <span className="flex-grow flex flex-col">
                     <span className="text-sm font-medium text-content-light dark:text-content-dark">
@@ -165,9 +176,12 @@ const Profile = () => {
 
           {/* Action Buttons */}
           <div className="mt-8 pt-5 border-t border-gray-700  flex justify-between items-center">
-            <button className="text-sm font-medium text-subtle-light dark:text-subtle-dark hover:text-content-light dark:hover:text-content-dark transition-colors duration-200">
+            <Button
+              onClick={handleLogout}
+              className="bg-primary cursor-pointer text-sm font-medium text-subtle-light dark:text-subtle-dark hover:text-content-light dark:hover:text-content-dark transition-colors duration-200"
+            >
               Log Out
-            </button>
+            </Button>
             <button className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-6 rounded-lg transition-colors duration-200">
               Save Changes
             </button>
