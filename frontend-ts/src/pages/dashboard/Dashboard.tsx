@@ -162,7 +162,7 @@ export default function Dashboard() {
           <div className="md:hidden space-y-3 mt-10">
             {links.slice(0, 5).map((t) => (
               <div
-                key={t.ref}
+                key={t.id}
                 className="p-3 rounded-lg text-gray-400 bg-[#1a1a1c] flex flex-col gap-2 border border-gray-800"
               >
                 <div className="flex justify-between text-sm">

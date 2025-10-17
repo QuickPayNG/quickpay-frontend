@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const CreateLink = () => {
   const [email, setEmail] = useState("");
-  const [amount, setAmount] = useState<number | string>('');
+  const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -24,7 +24,7 @@ const CreateLink = () => {
       setLink(link);
       setName("")
       setDescription("")
-      setAmount("")
+      setAmount(0)
       setEmail("")
     }
   };
@@ -79,7 +79,7 @@ const CreateLink = () => {
                     placeholder="Enter an amount"
                     min={100}
                     value={amount}
-                    onChange={(e) => setAmount(Number(e.target.value))}
+                    onChange={(e) => setAmount(e.target.value)}
                   />
                 </div>
 
