@@ -54,6 +54,7 @@ const mobileNavItems = [
 
 const Navbar = () => {
   const { logout } = useContext(AuthContext);
+  const navStyle = ({isActive}) => isActive ? "flex flex-row gap-4 items-center px-2 py-1.25 cursor-pointer bg-[#473c0a] text-white rounded-md" : "flex flex-row text-[#adaaaa] gap-4 items-center px-2 py-1.25 cursor-pointer hover:bg-[#473c0a] hover:text-white rounded-md"
 
   const handleLogout = async () => {
     console.log("signing out");
@@ -84,7 +85,7 @@ const Navbar = () => {
               <NavLink
                 key={index}
                 to={item.to}
-                className="flex flex-row text-[#adaaaa] gap-4 items-center px-2 py-1.25 cursor-pointer hover:bg-[#473c0a] hover:text-white rounded-md"
+                className={navStyle}
               >
                 {item.icon}
                 {item.label}
