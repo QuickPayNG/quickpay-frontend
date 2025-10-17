@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const CreateLink = () => {
   const [email, setEmail] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState<number | string>('');
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -22,8 +22,29 @@ const CreateLink = () => {
     const link: any = await generateLink(amount, description, name, email);
     if (link) {
       setLink(link);
+      setName("")
+      setDescription("")
+      setAmount("")
+      setEmail("")
     }
   };
+  
+  const handleShare = async () => {
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        url: link,
+      });
+      toast('Link shared successfully!');
+    } catch (error) {
+      console.error('Error sharing:', error);
+      toast('Error sharing the link');
+    }
+  } else {
+    toast('Sharing is not supported on this device.');
+  }
+};
+
 
   return (
     <div className="font-display bg-background dark:bg-background-dark text-content-light dark:text-content-dark">
@@ -55,6 +76,7 @@ const CreateLink = () => {
                     name="amount"
                     required
                     type="number"
+                    placeholder="Enter an amount"
                     min={100}
                     value={amount}
                     onChange={(e) => setAmount(Number(e.target.value))}
@@ -153,6 +175,7 @@ const CreateLink = () => {
                     <Button
                       variant={"outline"}
                       className="p-2 sm:px-4 sm:py-2 rounded-sm hover:bg-primary dark:hover:bg-primary/30 text-primary transition-colors"
+                      onClick={handleShare}
                     >
                       share
                     </Button>

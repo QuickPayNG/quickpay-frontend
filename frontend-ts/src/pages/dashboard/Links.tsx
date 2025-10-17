@@ -2,9 +2,11 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Links = () => {
   const { links } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -51,7 +53,7 @@ const Links = () => {
                 type="text"
               />
             </div>
-            <Button className="w-full md:w-auto flex items-center justify-center bg-primary text-background-dark font-bold py-2 px-4 rounded-DEFAULT hover:bg-primary/90 transition-colors">
+            <Button onClick={() => navigate("/createlink")} className="w-full md:w-auto flex items-center justify-center bg-primary text-background-dark font-bold py-2 px-4 rounded-DEFAULT hover:bg-primary/90 transition-colors">
               + Create New Link
             </Button>
           </div>
@@ -106,7 +108,7 @@ const Links = () => {
                         className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
                       >
                         <td className="py-3">{t.reference}</td>
-                        <td className="py-3">₦ {t.amount}</td>
+                        <td className="py-3">₦ {t.amount.toLocaleString()}</td>
                         <td className="py-3">{getStatusBadge(t.status)}</td>
                         <td className="py-3">
                           {new Date(
@@ -138,7 +140,7 @@ const Links = () => {
                     </div>
                     <div className="flex justify-between text-gray-400 text-sm">
                       <span>Amount</span>
-                      <span>₦ {t.amount}</span>
+                      <span>₦ {t.amount.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-gray-400 text-sm items-center">
                       <span>Status</span>
