@@ -3,17 +3,24 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { getInitials } from "@/lib/utils";
 
 export default function Dashboard() {
   const { user, links } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log("Links in Dashboard:", links);
+    console.log("User in Dashboard:", user);
+  }, [user, links]);
+
   const getTotalEarnings = () => {
+    if (links.length === 0) return 0;
     return links.reduce((total, link) => {
       if (link.status === "paid") {
         return total + link.amount;
@@ -55,12 +62,15 @@ export default function Dashboard() {
           Welcome back,{" "}
           <span className="block sm:inline">{user?.fullname}</span>
         </h1>
-        <div className="flex items-center gap-4 self-end sm:self-auto">
+        <div className="flex items-center gap-4 self-end sm:self-auto cursor-pointer">
           <Bell className="text-gray-300 w-5 h-5 sm:w-6 sm:h-6" />
-          <Avatar className="border border-gray-700 w-9 h-9 sm:w-10 sm:h-10">
+          <Avatar
+            onClick={() => navigate("/profile")}
+            className="border border-gray-700 w-9 h-9 sm:w-10 sm:h-10"
+          >
             {/* <AvatarImage src="/avatar.png" alt="Sarah" /> */}
-            <AvatarFallback className="text-gray-500 font-bold text-3xl">
-              {user?.fullname[0]}
+            <AvatarFallback className="text-gray-500 font-bold text-2xl">
+              {getInitials(user?.fullname)}
             </AvatarFallback>
           </Avatar>
         </div>
@@ -68,7 +78,7 @@ export default function Dashboard() {
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <Card className="bg-[#111112] border-0 border-l-4 border-yellow-500">
+        <Card className="bg-[#111112] border-0 border-l-4 border-primary">
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Total Earnings</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
@@ -77,20 +87,20 @@ export default function Dashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#111112] border-0 border-l-4 border-yellow-500">
+        <Card className="bg-[#111112] border-0 border-l-4 border-primary">
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Payment Links Created</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
-              {links.length}
+              {links?.length}
             </h2>
           </CardContent>
         </Card>
 
-        <Card className="bg-[#111112] border-0 border-l-4 border-yellow-500">
+        <Card className="bg-[#111112] border-0 border-l-4 border-primary">
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Customers Served</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
-              {links.length}
+              {links?.length}
             </h2>
           </CardContent>
         </Card>
@@ -100,7 +110,7 @@ export default function Dashboard() {
       <div className="flex justify-end">
         <Button
           onClick={() => navigate("/createlink")}
-          className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold rounded-md px-5 py-2 sm:px-6"
+          className="bg-primary hover:bg-primary/90 text-black font-semibold rounded-md px-5 py-2 sm:px-6"
         >
           + Create New Link
         </Button>
@@ -113,7 +123,7 @@ export default function Dashboard() {
         </h2>
 
         {/* Desktop Table */}
-        {links.length > 0 ? (
+        {links?.length > 0 ? (
           <div className="hidden md:block overflow-x-auto mt-10">
             <table className="w-full text-left text-sm">
               <thead className="text-gray-400 border-b border-gray-700">
@@ -125,7 +135,7 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {links.slice(0, 5).map((t) => (
+                {links?.slice(0, 5).map((t) => (
                   <tr
                     key={t.id}
                     className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
@@ -148,7 +158,7 @@ export default function Dashboard() {
         )}
 
         {/* Mobile Card View */}
-        {links.length > 0 ? (
+        {links?.length > 0 ? (
           <div className="md:hidden space-y-3 mt-10">
             {links.slice(0, 5).map((t) => (
               <div
@@ -182,7 +192,7 @@ export default function Dashboard() {
           </p>
         )}
 
-        {links.length > 0 && (
+        {links?.length > 0 && (
           <div className="flex justify-end mt-4">
             <Button
               variant="secondary"

@@ -73,7 +73,7 @@ const SignUP = () => {
               <div className="mt-1">
                 <input
                   className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  placeholder="Full Name"
+                  placeholder="Email"
                   id="email"
                   type="text"
                   value={email}

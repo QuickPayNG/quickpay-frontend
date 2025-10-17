@@ -1,4 +1,4 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { auth, db } from "../../lib/firebaseConfig";
 import {
@@ -13,9 +13,12 @@ import {
   doc,
   getDoc,
   getDocs,
+  onSnapshot,
+  query,
   serverTimestamp,
   setDoc,
   updateDoc,
+  where,
 } from "firebase/firestore";
 import toast from "react-hot-toast";
 
@@ -32,6 +35,7 @@ export const AuthProvider = ({ children }: any) => {
         setUser({
           uid: currentUser.uid,
           email: currentUser.email,
+          createdAt: currentUser.metadata.creationTime,
           ...(userData || {}),
         });
         setIsAuthenticated(true);
@@ -110,7 +114,12 @@ export const AuthProvider = ({ children }: any) => {
       console.log("user", user);
       const userData = await fetchUserDetails(user.uid);
       console.log(userData);
-      setUser({ uid: user.uid, email: user.email, ...(userData || {}) });
+      setUser({
+        uid: user.uid,
+        email: user.email,
+        createdAt: user.metadata.creationTime,
+        ...(userData || {}),
+      });
       toast.success("Logged In");
       setIsAuthenticated(true);
       return true;
@@ -131,9 +140,9 @@ export const AuthProvider = ({ children }: any) => {
     setIsLoading(true);
     const toastId = toast.loading("Signing out...");
     try {
-      await signOut(auth);
       setUser(null);
       setIsAuthenticated(false);
+      await signOut(auth);
       return true;
     } catch (error) {
       console.log(error);
@@ -215,39 +224,35 @@ export const AuthProvider = ({ children }: any) => {
   };
 
   useEffect(() => {
-    if (user) {
-      getLinks();
-    }
-  }, [user]);
+    if (!user) return;
 
-  const getLinks = async () => {
-    try {
-      setIsLoading(true);
-      const linksRef = collection(db, "users", user.uid, "links");
-      const snapshot = await getDocs(linksRef);
+    const linksRef = collection(db, "users", user.uid, "links");
+    const unsubscribe = onSnapshot(linksRef, (snapshot) => {
       const userLinks = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
-      console.log("userlinks", userLinks);
       setLinks(userLinks);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const updateLinkStatus = async (
-    userId: string,
-    linkId: string,
-    newStatus: string
-  ) => {
-    const linkDoc = doc(db, "users", userId, "links", linkId);
-    await updateDoc(linkDoc, {
-      status: newStatus,
     });
-  };
+
+    return () => unsubscribe();
+  }, [user]);
+
+  async function updateLinkStatus(
+    userId: string,
+    reference: string,
+    newStatus: string
+  ) {
+    const linksRef = collection(db, "users", userId, "links");
+    const q = query(linksRef, where("reference", "==", reference));
+    const snapshot = await getDocs(q);
+
+    snapshot.forEach(async (docSnap) => {
+      const linkDocRef = docSnap.ref;
+      await updateDoc(linkDocRef, { status: newStatus });
+      console.log(`Updated ${reference} to ${newStatus}`);
+    });
+  }
 
   const value = {
     user,
