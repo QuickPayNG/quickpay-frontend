@@ -27,22 +27,28 @@ const Profile = () => {
 
           {/* Profile Header Card */}
           <div className="bg-background-light dark:bg-background-dark border border-gray-700  rounded-lg shadow-sm p-6 mb-8">
-            <div className="flex items-center space-x-6">
-              <div className="w-24 h-24 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-3xl font-bold text-primary">
-                {getInitials(user?.fullname)}
+            <div className="flex items-center sm:justify-between flex-wrap sm:flex-nowrap">
+              <div className="flex items-center sm:space-x-6 flex-shrink-0">
+                <div className="w-24 h-24 rounded-full bg-surface-light dark:bg-surface-dark flex items-center justify-center text-3xl font-bold text-primary">
+                  {getInitials(user?.fullname)}
+                </div>
+                <div className="flex-grow">
+                  <h2 className="text-2xl font-bold text-content-light dark:text-content-dark">
+                    {user?.fullname}
+                  </h2>
+                  <p className="text-text dark:text-subtle-dark">
+                    {user?.email}
+                  </p>
+                  <p className="text-sm text-text dark:text-subtle-dark mt-1">
+                    Member since: {new Date(user?.createdAt)!.toDateString()}
+                  </p>
+                </div>
               </div>
-              <div className="flex-grow">
-                <h2 className="text-2xl font-bold text-content-light dark:text-content-dark">
-                  {user?.fullname}
-                </h2>
-                <p className="text-text dark:text-subtle-dark">{user?.email}</p>
-                <p className="text-sm text-text dark:text-subtle-dark mt-1">
-                  Member since: {new Date(user?.createdAt)!.toDateString()}
-                </p>
+              <div className="mt-4 sm:mt-0 w-full sm:w-auto justify-end flex">
+                <Button className="self-end bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-4 rounded transition-colors duration-200">
+                  Edit Profile
+                </Button>
               </div>
-              <Button className="bg-primary hover:bg-primary/90 text-background-dark font-bold py-2 px-4 rounded transition-colors duration-200">
-                Edit Profile
-              </Button>
             </div>
           </div>
 
