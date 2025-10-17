@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 import { useContext } from "react";
 
@@ -24,21 +24,21 @@ const Verify = () => {
 
         const data = await response.json();
         console.log(data);
-        if (data.data.status === "success") {
+        if (data?.data?.status === "success" || data?.data?.status === "failed") {
           const newStatus = data.data.status
-          const userId = data.data.metadata.userId
-          await updateLinkStatus(userId, reference, newStatus)
-          toast.success("Payment verified successfully!");
-        } 
-        else if (data.data.status === "failed") {
-          const newStatus = data.data.status
-          const userId = data.data.metadata.userId
-          await updateLinkStatus(userId, reference, newStatus)
-          toast.error("Payment verification failed, please contact the vendor!");
-        } 
-        else {
-          toast.error("Payment verification failed. Please try again.")
-        }
+          const userId = data.data.metadata?.userId
+          if (userId && reference && newStatus) {
+            await updateLinkStatus(userId, reference, newStatus);
+            if (newStatus === "success") {
+              toast.success("Payment verified successfully!");
+    } else if (newStatus === "failed") {
+      toast.error("Payment verification failed, please contact the vendor!");
+    }
+  } else {
+    toast.error("Missing user info. Could not verify payment.");
+  }
+}
+        
       } catch (error) {
         toast.error("Error verifying payment. Please try again.");
         console.error("Error verifying payment:", error);
