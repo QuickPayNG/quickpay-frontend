@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,13 @@ export default function Dashboard() {
   const { user, links } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    console.log("Links in Dashboard:", links);
+    console.log("User in Dashboard:", user);
+  }, [user, links]);
+
   const getTotalEarnings = () => {
+    if (links.length === 0) return 0;
     return links.reduce((total, link) => {
       if (link.status === "paid") {
         return total + link.amount;
@@ -60,7 +66,7 @@ export default function Dashboard() {
           <Avatar className="border border-gray-700 w-9 h-9 sm:w-10 sm:h-10">
             {/* <AvatarImage src="/avatar.png" alt="Sarah" /> */}
             <AvatarFallback className="text-gray-500 font-bold text-3xl">
-              {user?.fullname[0]}
+              {user?.fullname ? user.fullname.charAt(0).toUpperCase() : "U"}
             </AvatarFallback>
           </Avatar>
         </div>
@@ -81,7 +87,7 @@ export default function Dashboard() {
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Payment Links Created</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
-              {links.length}
+              {links?.length}
             </h2>
           </CardContent>
         </Card>
@@ -90,7 +96,7 @@ export default function Dashboard() {
           <CardContent className="pt-5 sm:pt-6">
             <p className="text-gray-400 text-sm mb-1">Customers Served</p>
             <h2 className="text-white text-2xl sm:text-3xl font-bold">
-              {links.length}
+              {links?.length}
             </h2>
           </CardContent>
         </Card>
@@ -113,7 +119,7 @@ export default function Dashboard() {
         </h2>
 
         {/* Desktop Table */}
-        {links.length > 0 ? (
+        {links?.length > 0 ? (
           <div className="hidden md:block overflow-x-auto mt-10">
             <table className="w-full text-left text-sm">
               <thead className="text-gray-400 border-b border-gray-700">
@@ -125,7 +131,7 @@ export default function Dashboard() {
                 </tr>
               </thead>
               <tbody>
-                {links.slice(0, 5).map((t) => (
+                {links?.slice(0, 5).map((t) => (
                   <tr
                     key={t.id}
                     className="border-b text-gray-400 border-gray-800 hover:bg-[#1a1a1c] transition"
@@ -148,7 +154,7 @@ export default function Dashboard() {
         )}
 
         {/* Mobile Card View */}
-        {links.length > 0 ? (
+        {links?.length > 0 ? (
           <div className="md:hidden space-y-3 mt-10">
             {links.slice(0, 5).map((t) => (
               <div
@@ -182,7 +188,7 @@ export default function Dashboard() {
           </p>
         )}
 
-        {links.length > 0 && (
+        {links?.length > 0 && (
           <div className="flex justify-end mt-4">
             <Button
               variant="secondary"
