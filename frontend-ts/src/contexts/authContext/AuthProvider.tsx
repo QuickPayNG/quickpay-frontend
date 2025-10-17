@@ -191,7 +191,7 @@ export const AuthProvider = ({ children }: any) => {
         body: JSON.stringify({
           email: email || "customer@email.com",
           amount: amount * 100,
-          callback_url: "http://localhost:5173/verify",
+          callback_url: "https://quickpay-app.netlify.app/verify",
           channels: ["bank", "card", "ussd"],
           metadata: {
             name: name || "Customer",
