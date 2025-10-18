@@ -90,7 +90,7 @@ const Login = () => {
             </div>
           </form>
 
-          <div>
+          {/* <div>
             <Button
               className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30 cursor-pointer"
               type="button"
@@ -119,7 +119,7 @@ const Login = () => {
               </svg>
               Continue with Google
             </Button>
-          </div>
+          </div> */}
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Don't have an account?

@@ -15,6 +15,7 @@ type AuthContextType = {
     email: string
   ) => void;
   updateLinkStatus: (userId: string, linkId: string, newStatus: string) => void;
+  verifyPayment: (reference: string) => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
@@ -27,4 +28,5 @@ export const AuthContext = createContext<AuthContextType>({
   logout: () => {},
   generateLink: () => {},
   updateLinkStatus: () => {},
+  verifyPayment: () => {},
 });

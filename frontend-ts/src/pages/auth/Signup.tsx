@@ -24,6 +24,14 @@ const SignUP = () => {
       toast.error("Password does not match");
       return;
     }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "Password must be at least 6 characters and include uppercase, lowercase, number, and special character"
+      );
+      return;
+    }
 
     const isSuccess: any = await signup(fullname, email, password);
 
@@ -100,6 +108,10 @@ const SignUP = () => {
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <p className="text-xs text-gray-400 mt-1">
+                  Password must be at least 6 characters and include uppercase,
+                  lowercase, number, and special character.
+                </p>
               </div>
             </div>
             <div>
@@ -128,7 +140,7 @@ const SignUP = () => {
             >
               {isLoading ? "Signing up.." : "Sign up for free"}
             </Button>
-            <Button
+            {/* <Button
               className="w-full inline-flex justify-center py-3 px-4 border dark:border-gray-300 border-white/20 rounded-lg shadow-sm dark:bg-white bg-black/20 text-sm font-medium dark:text-gray-700 text-white dark:hover:bg-gray-50 hover:bg-black/30 cursor-pointer"
               type="button"
             >
@@ -155,7 +167,7 @@ const SignUP = () => {
                 ></path>
               </svg>
               Sign up with Google
-            </Button>
+            </Button> */}
           </form>
           <div className="text-center space-y-2">
             <p className="text-sm text-gray-600 dark:text-gray-400">
