@@ -14,6 +14,7 @@ import Rewards from "./pages/dashboard/Rewards";
 import Waitlist from "./pages/waitlist/Waitlist";
 import Verify from "./pages/verify/Verify";
 import CreateLink from "./pages/dashboard/CreateLink";
+import CustomerReceipt from "./pages/receipt/CustomerReceipt";
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
       {
         path: "/verify",
         element: <Verify />,
+      },
+      {
+        path: "/receipt/:reference",
+        element: <CustomerReceipt />,
       },
       {
         path: "/login",
@@ -75,10 +80,9 @@ export const router = createBrowserRouter([
             path: "createlink",
             element: (
               <ProtectedRoute>
-              <CreateLink />
+                <CreateLink />
               </ProtectedRoute>
             ),
-
           },
           {
             path: "rewards",

@@ -239,11 +239,11 @@ export const AuthProvider = ({ children }: any) => {
     return () => unsubscribe();
   }, [user]);
 
-  async function updateLinkStatus(
+  const updateLinkStatus = async (
     userId: string,
     reference: string,
     newStatus: string
-  ) {
+  ) => {
     const linksRef = collection(db, "users", userId, "links");
     const q = query(linksRef, where("reference", "==", reference));
     const snapshot = await getDocs(q);
@@ -253,7 +253,28 @@ export const AuthProvider = ({ children }: any) => {
       await updateDoc(linkDocRef, { status: newStatus });
       console.log(`Updated ${reference} to ${newStatus}`);
     });
-  }
+  };
+
+  const verifyPayment = async (reference: string) => {
+    try {
+      const response = await fetch(
+        `https://api.paystack.co/transaction/verify/${reference}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${import.meta.env.VITE_SECRET_KEY}`,
+          },
+        }
+      );
+
+      const data = await response.json();
+      console.log(data);
+      return data;
+    } catch (error) {
+      console.error("Error verifying payment:", error);
+    }
+  };
 
   const value = {
     user,
@@ -265,6 +286,7 @@ export const AuthProvider = ({ children }: any) => {
     links,
     generateLink,
     updateLinkStatus,
+    verifyPayment,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
