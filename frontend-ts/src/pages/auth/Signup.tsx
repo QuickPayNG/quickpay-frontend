@@ -24,6 +24,14 @@ const SignUP = () => {
       toast.error("Password does not match");
       return;
     }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+      toast.error(
+        "Password must be at least 6 characters and include uppercase, lowercase, number, and special character"
+      );
+      return;
+    }
 
     const isSuccess: any = await signup(fullname, email, password);
 
@@ -100,6 +108,10 @@ const SignUP = () => {
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <p className="text-xs text-gray-400 mt-1">
+                  Password must be at least 6 characters and include uppercase,
+                  lowercase, number, and special character.
+                </p>
               </div>
             </div>
             <div>
