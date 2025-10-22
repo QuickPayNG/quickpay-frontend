@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 const CreateLink = () => {
   const [email, setEmail] = useState("");
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
@@ -19,32 +19,32 @@ const CreateLink = () => {
       toast.error("Please fill in the amount");
       return;
     }
-    const link: any = await generateLink(amount, description, name, email);
+    const parseAmount = parseFloat(amount);
+    const link: any = await generateLink(parseAmount, description, name, email);
     if (link) {
       setLink(link);
-      setName("")
-      setDescription("")
-      setAmount(0)
-      setEmail("")
+      setName("");
+      setDescription("");
+      setAmount("");
+      setEmail("");
     }
   };
-  
-  const handleShare = async () => {
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        url: link,
-      });
-      toast('Link shared successfully!');
-    } catch (error) {
-      console.error('Error sharing:', error);
-      toast('Error sharing the link');
-    }
-  } else {
-    toast('Sharing is not supported on this device.');
-  }
-};
 
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          url: link,
+        });
+        toast("Link shared successfully!");
+      } catch (error) {
+        console.error("Error sharing:", error);
+        toast("Error sharing the link");
+      }
+    } else {
+      toast("Sharing is not supported on this device.");
+    }
+  };
 
   return (
     <div className="font-display bg-background dark:bg-background-dark text-content-light dark:text-content-dark">
@@ -79,7 +79,7 @@ const CreateLink = () => {
                     placeholder="Enter an amount"
                     min={100}
                     value={amount}
-                    onChange={(e) => setAmount(Number(e.target.value))}
+                    onChange={(e) => setAmount(e.target.value)}
                   />
                 </div>
 

@@ -1,12 +1,28 @@
 import { Button } from "@/components/ui/button";
 import TransactionTable from "@/components/ui/TransactionTable";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
-import { useContext } from "react";
+import { useContext, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Links = () => {
   const { links } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeTab, setActiveTab] = useState("All");
+
+  const filteredLinks = useMemo(() => {
+    return links.filter((link) => {
+      const matchesSearch =
+        link.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        link.reference?.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesTab =
+        activeTab === "All" ||
+        link.status?.toLowerCase() === activeTab.toLowerCase();
+
+      return matchesSearch && matchesTab;
+    });
+  }, [links, searchTerm, activeTab]);
 
   return (
     <div className="bg-background relative dark:bg-background-dark font-display text-text-light dark:text-text-dark">
@@ -20,12 +36,15 @@ const Links = () => {
               View and manage all your generated payment links.
             </p>
           </div>
+
           <div className="mb-6 md:flex md:items-center md:justify-between space-y-4 md:space-y-0">
             <div className="flex items-center">
               <input
                 className="w-full md:w-80 p-2 rounded-sm border border-primary/50 dark:border-border-dark text-text/50 text-xs outline-none placeholder:text-text/50 placeholder:text-sm"
                 placeholder="Search by description or reference..."
                 type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <Button
@@ -35,39 +54,31 @@ const Links = () => {
               + Create New Link
             </Button>
           </div>
+
           <div className="mb-6">
             <div className="border-b border-border-light dark:border-border-dark">
               <nav aria-label="Tabs" className="-mb-px flex space-x-8">
-                <a
-                  className="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-primary border-primary"
-                  href="#"
-                >
-                  All
-                </a>
-                <a
-                  className="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-text dark:text-text-muted-dark border-transparent hover:text-text-light dark:hover:text-text-dark hover:border-border-light dark:hover:border-border-dark"
-                  href="#"
-                >
-                  Pending
-                </a>
-                <a
-                  className="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-text dark:text-text-muted-dark border-transparent hover:text-text-light dark:hover:text-text-dark hover:border-border-light dark:hover:border-border-dark"
-                  href="#"
-                >
-                  Paid
-                </a>
-                <a
-                  className="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm text-text dark:text-text-muted-dark border-transparent hover:text-text-light dark:hover:text-text-dark hover:border-border-light dark:hover:border-border-dark"
-                  href="#"
-                >
-                  Expired
-                </a>
+                {["All", "Pending", "Success", "Failed"].map((status) => (
+                  <button
+                    key={status}
+                    onClick={() => setActiveTab(status)}
+                    className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm 
+                      ${
+                        activeTab === status
+                          ? "text-primary border-primary"
+                          : "text-text dark:text-text-muted-dark border-transparent hover:text-text-light dark:hover:text-text-dark hover:border-border-light dark:hover:border-border-dark"
+                      }`}
+                  >
+                    {status}
+                  </button>
+                ))}
               </nav>
             </div>
           </div>
-          {/* Recent Transactions */}
+
+          {/* Filtered Transactions */}
           <section className="bg-card rounded-xl p-4">
-            <TransactionTable links={links} />
+            <TransactionTable links={filteredLinks} />
           </section>
         </div>
       </div>

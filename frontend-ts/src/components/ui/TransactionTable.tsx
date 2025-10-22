@@ -40,7 +40,7 @@ const TransactionTable = ({ links }: { links: any }) => {
       {links?.length > 0 ? (
         <div className="hidden md:block overflow-x-auto mt-10">
           <table className="w-full text-left text-sm">
-            <thead className="text-gray-400 border-b border-gray-700">
+            <thead className="text-text border-b border-gray-700">
               <tr>
                 <th className="pb-2">Reference</th>
                 <th className="pb-2">Amount</th>
@@ -57,6 +57,7 @@ const TransactionTable = ({ links }: { links: any }) => {
                 >
                   <td className="py-3">{t.reference}</td>
                   <td className="py-3">₦ {t.amount.toLocaleString()}</td>
+                  <td className="py-3">{t.description}</td>
                   <td className="py-3">{getStatusBadge(t.status)}</td>
                   <td className="py-3">
                     {new Date(t.createdAt?.seconds * 1000).toLocaleString()}
