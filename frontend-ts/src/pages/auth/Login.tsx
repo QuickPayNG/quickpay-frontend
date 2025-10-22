@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { AuthContext } from "@/contexts/authContext/AuthContext";
-
+import { Eye, EyeOff } from "lucide-react";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const { login, isLoading } = useContext(AuthContext);
 
@@ -47,6 +48,7 @@ const Login = () => {
                   className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   id="email"
                   name="email"
+                  placeholder="Email"
                   required
                   type="email"
                   value={email}
@@ -62,16 +64,24 @@ const Login = () => {
               >
                 Password *
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
                   className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   id="password"
                   name="password"
+                  placeholder="Password"
                   required
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-800"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
               </div>
             </div>
             <div className="flex items-center justify-between">

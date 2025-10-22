@@ -4,12 +4,16 @@ import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 
 const SignUP = () => {
   const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const { isLoading, signup } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -98,22 +102,30 @@ const SignUP = () => {
               >
                 Password *
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
-                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  placeholder="Confirm Password"
-                  type="password"
+                  className="w-full px-4 py-3 pr-10 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  placeholder="Password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   value={password}
                   required
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <p className="text-xs text-gray-400 mt-1">
-                  Password must be at least 6 characters and include uppercase,
-                  lowercase, number, and special character.
-                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-800"
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
               </div>
+              <p className="text-xs text-gray-400 mt-1">
+                Password must be at least 6 characters and include uppercase,
+                lowercase, number, and special character.
+              </p>
             </div>
+
             <div>
               <label
                 className="block text-sm font-medium dark:text-gray-700 text-gray-300"
@@ -121,16 +133,27 @@ const SignUP = () => {
               >
                 Confirm Password *
               </label>
-              <div className="mt-1">
+              <div className="mt-1 relative">
                 <input
-                  className="w-full px-4 py-3 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full px-4 py-3 pr-10 dark:bg-gray-100 bg-black/20 dark:text-gray-800 text-gray-200 border dark:border-gray-300 border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
                   placeholder="Confirm Password"
-                  type="password"
+                  type={showConfirmPassword ? "text" : "password"}
                   id="confirmPassword"
                   value={confirmPassword}
                   required
                   onChange={(e) => setConfirmPassword(e.target.value)}
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-800"
+                >
+                  {showConfirmPassword ? (
+                    <EyeOff size={20} />
+                  ) : (
+                    <Eye size={20} />
+                  )}
+                </button>
               </div>
             </div>
 
